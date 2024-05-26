@@ -1,8 +1,6 @@
-import FileCopyIcon from '@mui/icons-material/FileCopy';
 import React, { useState } from 'react';
-import { BsFillFileEarmarkPdfFill, BsGoogle } from 'react-icons/bs';
 
-const CreateQuizzOptions = ({ handleGenerateQuestions, setTopics }) => {
+const CreateQuizzOptions = ({ handleGenerateQuestions }) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
     const handleOptionChange = (option) => {
@@ -12,9 +10,8 @@ const CreateQuizzOptions = ({ handleGenerateQuestions, setTopics }) => {
     return (
         <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md mt-10">
             <h2 className="text-2xl font-bold mb-4 text-center text-purple-700">Elige cómo te gustaría crear</h2>
-            
             <div className="mb-8">
-                <div 
+                <div
                     className={`p-4 border ${selectedOption === 'suggestion' ? 'border-purple-700' : 'border-gray-200'} rounded-lg mb-2 cursor-pointer bg-white hover:bg-purple-100`}
                     onClick={() => handleOptionChange('suggestion')}
                 >
@@ -83,7 +80,7 @@ const CreateQuizzOptions = ({ handleGenerateQuestions, setTopics }) => {
                     )}
                 </div>
 
-                <div 
+                <div
                     className={`p-4 border ${selectedOption === 'document' ? 'border-purple-700' : 'border-gray-200'} rounded-lg mb-2 cursor-pointer bg-white hover:bg-purple-100`}
                     onClick={() => handleOptionChange('document')}
                 >
@@ -103,18 +100,19 @@ const CreateQuizzOptions = ({ handleGenerateQuestions, setTopics }) => {
                     {selectedOption === 'document' && (
                         <div className="mt-4 flex justify-between items-center space-x-2">
                             <button className="p-2 flex-1 bg-purple-200 hover:bg-purple-300 text-purple-700 rounded-lg flex items-center justify-center">
-                                <BsFillFileEarmarkPdfFill className="mr-2" />
                                 Subir desde el dispositivo
                             </button>
                             <button className="p-2 flex-1 bg-purple-200 hover:bg-purple-300 text-purple-700 rounded-lg flex items-center justify-center">
-                                <BsGoogle className="mr-2" />
                                 Importar desde Google Drive
                             </button>
+                            <div className="flex justify-end mt-4">
+                                <button onClick={handleGenerateQuestions} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">+ Generar preguntas</button>
+                            </div>
                         </div>
                     )}
                 </div>
 
-                <div 
+                <div
                     className={`p-4 border ${selectedOption === 'link' ? 'border-purple-700' : 'border-gray-200'} rounded-lg cursor-pointer bg-white hover:bg-purple-100`}
                     onClick={() => handleOptionChange('link')}
                 >
@@ -138,13 +136,15 @@ const CreateQuizzOptions = ({ handleGenerateQuestions, setTopics }) => {
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500"
                                 placeholder="https://www.youtube.com/watch?v=..."
                             />
-                            <FileCopyIcon className="ml-2 text-purple-600" />
+                            <div className="flex justify-end mt-4">
+                                <button onClick={handleGenerateQuestions} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">+ Generar preguntas</button>
+                            </div>
                         </div>
                     )}
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default CreateQuizzOptions;
