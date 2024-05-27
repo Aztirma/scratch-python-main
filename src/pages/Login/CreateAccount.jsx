@@ -1,12 +1,12 @@
 
 import { useState } from 'react';
-import HeaderLogin from '../../components/HeaderLogin';
 import { useNavigate } from 'react-router-dom';
+import HeaderLogin from '../../components/HeaderLogin';
 import useAuth from '../../hooks/useAuth';
 
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import AppleIcon from '@mui/icons-material/Apple';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
 
 const CreateAccount = () => {
     const navigate = useNavigate();
