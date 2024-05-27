@@ -29,10 +29,10 @@ const SidebarProfile = () => {
                 </Link>
             </div>
             <nav className="flex flex-col space-y-4">
-                <Link to="/progress" className={getLinkClassName('/progress')}>
+                {/* <Link to="/progress" className={getLinkClassName('/progress')}>
                     <NotificationsOutlinedIcon className="mr-3" />
                     <span>Progress</span>
-                </Link>
+                </Link> */}
                 <Link to="/security" className={getLinkClassName('/security')}>
                     <LockOutlinedIcon className="mr-3" />
                     <span>Security</span>
@@ -41,15 +41,15 @@ const SidebarProfile = () => {
                     <ArticleOutlinedIcon className="mr-3" />
                     <span>Appearance</span>
                 </Link>
-                <Link to="/audio" className={getLinkClassName('/audio')}>
+                {/* <Link to="/audio" className={getLinkClassName('/audio')}>
                     <CodeOutlinedIcon className="mr-3" />
                     <span>Audio</span>
                 </Link>
                 <Link to="/language" className={getLinkClassName('/language')}>
                     <PublicOutlinedIcon className="mr-3" />
                     <span>Language</span>
-                </Link>
-                <Link to="/published" className={getLinkClassName('/published')}>
+                </Link> */}
+                {/* <Link to="/published" className={getLinkClassName('/published')}>
                     <CheckCircleOutlineOutlinedIcon className="mr-3" />
                     <span>Published</span>
                 </Link>
@@ -60,7 +60,7 @@ const SidebarProfile = () => {
                 <Link to="/bookmarks" className={getLinkClassName('/bookmarks')}>
                     <BookmarksOutlinedIcon className="mr-3" />
                     <span>Bookmarks</span>
-                </Link>
+                </Link> */}
             </nav>
         </div>
     );

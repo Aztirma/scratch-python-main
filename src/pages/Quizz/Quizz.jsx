@@ -30,10 +30,7 @@ const Quizz = () => {
                                 </div>
                             </div>
                             <div className="flex space-x-2">
-                                <button className="bg-white hover:bg-slate-100 border-2 border-black text-gray-800 rounded px-4 py-2 flex items-center">
-                                    <InsertLinkIcon className="mr-2" />
-                                    <span>Integrate</span>
-                                </button>
+
                                 <button className="bg-white hover:bg-slate-100 border-2 border-black text-gray-800 rounded px-4 py-2 flex items-center">
                                     <ShareIcon className="mr-2" />
                                     <span>Share</span>
@@ -42,9 +39,7 @@ const Quizz = () => {
                                     <FavoriteBorderIcon className="mr-2" />
                                     <span>95</span>
                                 </button>
-                                <button className="bg-white hover:bg-slate-100 border-2 border-black text-gray-800 rounded px-4 py-2 flex items-center">
-                                    <WarningIcon className="mr-2" />
-                                </button>
+
                             </div>
                         </div>
 
@@ -57,14 +52,11 @@ const Quizz = () => {
                                 <FolderIcon className="mr-2" />
                                 <span>Save</span>
                             </button>
-                            <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 rounded px-4 py-2">
-                                <StarBorderIcon className="mr-2" />
-                                <span>Improved AI</span>
-                            </button>
+{/* 
                             <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 rounded px-4 py-2">
                                 <FileCopyRoundedIcon className="mr-2" />
                                 <span>Copy and edit</span>
-                            </button>
+                            </button> */}
                         </div>
                     </div>
 

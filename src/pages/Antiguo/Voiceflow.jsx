@@ -5,9 +5,8 @@ import { sendMessageToVoiceflow } from '../../services/voiceflowService';
 const Voiceflow = () => {
   const [message, setMessage] = useState('');
   const [response, setResponse] = useState('');
-  const userId = 'user123'; // Aquí puedes generar o obtener dinámicamente el ID del usuario
+  const userId = 'user123';
 
-  // Enviar mensaje inicial cuando el componente se monta
   useEffect(() => {
     const initiateConversation = async () => {
       try {

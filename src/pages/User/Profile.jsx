@@ -38,7 +38,7 @@ const Profile = () => {
                             skills with a focus on collaboration, communication, and creativity.
                         </p>
                     </div>
-                    <div className="flex justify-between text-gray-800">
+                    {/* <div className="flex justify-between text-gray-800">
                         <div className="text-center">
                             <p className="text-xl font-bold">S/8.54</p>
                             <p className="text-gray-500">Hourly rate</p>
@@ -55,7 +55,7 @@ const Profile = () => {
                             <p className="text-xl font-bold">2000+</p>
                             <p className="text-gray-500">Hours worked</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="bg-white shadow-md rounded-lg p-6">
                     <div className="flex items-center justify-between mb-4">

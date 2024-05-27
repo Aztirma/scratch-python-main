@@ -8,9 +8,12 @@ const initialDummyUsers = [
 ];
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [dummyUsers, setDummyUsers] = useState(initialDummyUsers);
     const [newUserEmail, setNewUserEmail] = useState('');
+    const [variable1, setVariable1] = useState('initialValue1');
+    const [variable2, setVariable2] = useState('initialValue2');
+    const [variable3, setVariable3] = useState('initialValue3');
 
     
     const login = (username, password, callback) => {
