@@ -1,94 +1,84 @@
-import BarChartIcon from '@mui/icons-material/BarChart';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import InsertChartIcon from '@mui/icons-material/InsertChart';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Bar, Pie } from 'react-chartjs-2';
 import SidebarQuizz from '../../components/SidebarQuizz';
+import QuizzContext from '../../context/QuizzProvider';
 
 const ReportQuizz = () => {
-  const quizData = [
-    { title: 'Math Basics', plays: 120, highScore: 98 },
-    { title: 'Science Facts', plays: 150, highScore: 95 },
-    { title: 'History 101', plays: 100, highScore: 92 },
-  ];
+    const { quizzes } = useContext(QuizzContext);
 
-  return (
-    <div className="flex h-screen bg-gray-200">
-      <SidebarQuizz />
-      <div className="flex-1 p-8 overflow-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h1 className="text-3xl font-bold mb-6 text-purple-800">Reports</h1>
-          <div className="grid grid-cols-3 gap-6">
-            <div className="bg-purple-100 p-4 rounded-lg shadow flex items-center">
-              <InsertChartIcon className="text-purple-600 mr-4" />
-              <div>
-                <h2 className="text-2xl font-bold mb-1">Total Quizzes Created</h2>
-                <p className="text-purple-800 text-4xl">29</p>
-              </div>
-            </div>
-            <div className="bg-purple-100 p-4 rounded-lg shadow flex items-center">
-              <BarChartIcon className="text-purple-600 mr-4" />
-              <div>
-                <h2 className="text-2xl font-bold mb-1">Total Plays</h2>
-                <p className="text-purple-800 text-4xl">1500</p>
-              </div>
-            </div>
-            <div className="bg-purple-100 p-4 rounded-lg shadow flex items-center">
-              <EmojiEventsIcon className="text-purple-600 mr-4" />
-              <div>
-                <h2 className="text-2xl font-bold mb-1">Average Score</h2>
-                <p className="text-purple-800 text-4xl">85%</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-6 text-purple-800">Quiz Performance</h2>
-          <div className="grid grid-cols-1 gap-6">
-            {quizData.map((quiz, index) => (
-              <div key={index} className="bg-gray-100 p-4 rounded-lg shadow">
-                <h3 className="text-xl font-bold mb-2 text-purple-800">{quiz.title}</h3>
-                <div className="flex items-center mb-2">
-                  <span className="w-20 text-gray-700 font-bold">Plays</span>
-                  <div className="bg-gray-300 h-6 flex-1 mx-2 rounded">
-                    <div
-                      className="bg-blue-500 h-6 rounded"
-                      style={{ width: `${quiz.plays / 10}%` }}
-                    ></div>
-                  </div>
-                  <span className="text-gray-700 font-bold">{quiz.plays}</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="w-20 text-gray-700 font-bold">High Score</span>
-                  <div className="bg-gray-300 h-6 flex-1 mx-2 rounded">
-                    <div
-                      className="bg-green-500 h-6 rounded"
-                      style={{ width: `${quiz.highScore}%` }}
-                    ></div>
-                  </div>
-                  <span className="text-gray-700 font-bold">{quiz.highScore}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    useEffect(() => {
+        console.log(quizzes);
+    }, [quizzes]);
 
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-bold mb-6 text-purple-800">Recent Activity</h2>
-          <ul className="list-disc list-inside text-gray-700">
-            <li className="mb-2">User X created a new quiz <span className="font-bold text-purple-800">"Math Basics"</span></li>
-            <li className="mb-2">User Y played <span className="font-bold text-purple-800">"Science Facts"</span> quiz</li>
-            <li className="mb-2">User Z achieved a high score on <span className="font-bold text-purple-800">"History 101"</span></li>
-          </ul>
+    const quizNames = quizzes.map(quiz => quiz.name);
+    const quizPlays = quizzes.map(quiz => parseFloat(quiz.plays.replace(/[^0-9.]/g, '')));
+    const quizRatings = quizzes.map(quiz => quiz.rating);
+    const userQuizzes = quizzes.filter(quiz => quiz.creator === 'current_user'); // Cambia 'current_user' por el usuario actual
+
+    // Obtener la cantidad de quizzes por estado (Published/Drafts)
+    const publishedQuizzes = userQuizzes.filter(quiz => !quiz.isDraft);
+    const draftQuizzes = userQuizzes.filter(quiz => quiz.isDraft);
+
+    const playsData = {
+        labels: quizNames,
+        datasets: [
+            {
+                label: 'Number of Plays',
+                data: quizPlays,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    const ratingsData = {
+        labels: quizNames,
+        datasets: [
+            {
+                label: 'Ratings',
+                data: quizRatings,
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    const publishedDraftData = {
+        labels: ['Published', 'Drafts'],
+        datasets: [
+            {
+                data: [publishedQuizzes.length, draftQuizzes.length],
+                backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    return (
+        <div className="flex h-screen">
+            <SidebarQuizz />
+            <div className="flex-1 p-8 bg-gray-100 overflow-auto">
+                <h1 className="text-2xl font-bold mb-4">My Quiz Reports</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-white p-4 rounded-lg shadow">
+                        <h2 className="text-xl font-semibold mb-2">Number of Plays</h2>
+                        <Bar data={playsData} />
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow">
+                        <h2 className="text-xl font-semibold mb-2">Ratings</h2>
+                        <Bar data={ratingsData} />
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow">
+                        <h2 className="text-xl font-semibold mb-2">Published vs Drafts</h2>
+                        <Pie data={publishedDraftData} />
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ReportQuizz;
-
-
-
-
-
