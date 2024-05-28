@@ -8,7 +8,7 @@ const initialDummyUsers = [
 ];
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
     const [dummyUsers, setDummyUsers] = useState(initialDummyUsers);
     const [newUserEmail, setNewUserEmail] = useState('');
     const [variable1, setVariable1] = useState('initialValue1');
