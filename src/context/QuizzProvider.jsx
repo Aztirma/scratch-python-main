@@ -79,7 +79,7 @@ const initialDummyQuizz = [
         id: 3,
         name: 'Logic and Control Structures',
         plays: '31.9K',
-        isDraft: false,
+        isDraft: true,
         creator: 'admin',
         rating: 3.7,
         questions: [
