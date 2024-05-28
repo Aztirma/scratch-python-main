@@ -5,18 +5,18 @@ import useAuth from '../../hooks/useAuth';
 import useQuizz from '../../hooks/useQuizz';
 
 const ExploreQuizz = () => {
-    const { filteredQuizzesExplore, handleSearchChangeExplore, handleSortChangeExplore } = useQuizz();
+    const { filteredQuizzesExplore, setSearchTermExplore, setSortOptionExplore } = useQuizz();
     const { user } = useAuth();
     const [searchInput, setSearchInput] = useState('');
     const navigate = useNavigate();
 
     const onSearchChange = (e) => {
         setSearchInput(e.target.value);
-        handleSearchChangeExplore(e.target.value);
+        setSearchTermExplore(e.target.value);
     };
 
     const onSortChange = (e) => {
-        handleSortChangeExplore(e.target.value);
+        setSortOptionExplore(e.target.value);
     };
 
     const handleQuizzClick = (id) => {
@@ -51,15 +51,11 @@ const ExploreQuizz = () => {
                     </div>
                     <div className="grid grid-cols-4 gap-4">
                         {filteredQuizzesExplore && filteredQuizzesExplore.map((quizz, index) => (
-                            <div
+                            <QuizzCard
                                 key={index}
-                                className="bg-gray-200 p-4 rounded-lg shadow cursor-pointer"
+                                quizz={quizz}
                                 onClick={() => handleQuizzClick(quizz.id)}
-                            >
-                                <div className="h-40 bg-pink-200 mb-2"></div>
-                                <h3 className="text-lg font-bold">{quizz.name}</h3>
-                                <p>{quizz.questions.length} Questions · {quizz.plays} play · Rating: {quizz.rating}</p>
-                            </div>
+                            />
                         ))}
                     </div>
                 </div>
@@ -68,14 +64,12 @@ const ExploreQuizz = () => {
     );
 };
 
-
-
-const QuizzCard = ({ quizz }) => {
+const QuizzCard = ({ quizz, onClick }) => {
     return (
-        <div className="bg-gray-200 p-4 rounded-lg shadow">
+        <div className="bg-gray-200 p-4 rounded-lg shadow cursor-pointer" onClick={onClick}>
             <div className="h-40 bg-pink-200 mb-2"></div>
             <h3 className="text-lg font-bold">{quizz.name}</h3>
-            <p>{quizz.questions.length} Questions · {quizz.plays} play · Rating: {quizz.rating}</p>
+            <p>{quizz.questions.length} Questions · {quizz.plays} plays · Rating: {quizz.rating}</p>
         </div>
     );
 };
