@@ -6,6 +6,7 @@ const QuizzContext = createContext();
 // Datos iniciales de ejemplo
 const initialDummyQuizz = [
     {
+        id:1,
         name: 'Introduction to Programming with Python',
         plays: '140.4K',
         isDraft: false,
@@ -18,6 +19,7 @@ const initialDummyQuizz = [
         isPreviouslyUsed: false,
     },
     {
+        id:2,
         name: 'Visual Programming for Everyone',
         plays: '12.8K',
         isDraft: false,
@@ -30,6 +32,7 @@ const initialDummyQuizz = [
         isPreviouslyUsed: true,
     },
     {
+        id:3,
         name: 'Logic and Control Structures',
         plays: '31.9K',
         isDraft: true,
@@ -42,6 +45,7 @@ const initialDummyQuizz = [
         isPreviouslyUsed: false,
     },
     {
+        id:4,
         name: 'Multisensory Elements in Programming',
         plays: '31.9K',
         isDraft: true,
@@ -54,6 +58,7 @@ const initialDummyQuizz = [
         isPreviouslyUsed: true,
     },
     {
+        id:5,
         name: 'Multisensory Elements',
         plays: '30.9K',
         isDraft: true,

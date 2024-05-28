@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SidebarQuizz from '../../components/SidebarQuizz';
 import useAuth from '../../hooks/useAuth';
 import useQuizz from '../../hooks/useQuizz';
 
 const ExploreQuizz = () => {
-    const { filteredQuizzesExplore, setSearchTermExplore, setSortOptionExplore } = useQuizz();
+    const { filteredQuizzesExplore, handleSearchChangeExplore, handleSortChangeExplore } = useQuizz();
     const { user } = useAuth();
     const [searchInput, setSearchInput] = useState('');
+    const navigate = useNavigate();
 
     const onSearchChange = (e) => {
         setSearchInput(e.target.value);
-        setSearchTermExplore(e.target.value);
+        handleSearchChangeExplore(e.target.value);
     };
 
     const onSortChange = (e) => {
-        setSortOptionExplore(e.target.value);
+        handleSortChangeExplore(e.target.value);
+    };
+
+    const handleQuizzClick = (id) => {
+        navigate(`/quizz/game/${id}`);
     };
 
     return (
@@ -44,8 +50,16 @@ const ExploreQuizz = () => {
                         </select>
                     </div>
                     <div className="grid grid-cols-4 gap-4">
-                        {filteredQuizzesExplore.map((quizz, index) => (
-                            <QuizzCard key={index} quizz={quizz} />
+                        {filteredQuizzesExplore && filteredQuizzesExplore.map((quizz, index) => (
+                            <div
+                                key={index}
+                                className="bg-gray-200 p-4 rounded-lg shadow cursor-pointer"
+                                onClick={() => handleQuizzClick(quizz.id)}
+                            >
+                                <div className="h-40 bg-pink-200 mb-2"></div>
+                                <h3 className="text-lg font-bold">{quizz.name}</h3>
+                                <p>{quizz.questions.length} Questions · {quizz.plays} play · Rating: {quizz.rating}</p>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -53,6 +67,8 @@ const ExploreQuizz = () => {
         </div>
     );
 };
+
+
 
 const QuizzCard = ({ quizz }) => {
     return (
