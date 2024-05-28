@@ -4,17 +4,17 @@ import useAuth from '../../hooks/useAuth';
 import useQuizz from '../../hooks/useQuizz';
 
 const ExploreQuizz = () => {
-    const { filteredQuizzes, handleSearchChange, handleSortChange } = useQuizz();
+    const { filteredQuizzesExplore, setSearchTermExplore, setSortOptionExplore } = useQuizz();
     const { user } = useAuth();
     const [searchInput, setSearchInput] = useState('');
 
     const onSearchChange = (e) => {
         setSearchInput(e.target.value);
-        handleSearchChange(e.target.value);
+        setSearchTermExplore(e.target.value);
     };
 
     const onSortChange = (e) => {
-        handleSortChange(e.target.value);
+        setSortOptionExplore(e.target.value);
     };
 
     return (
@@ -38,13 +38,13 @@ const ExploreQuizz = () => {
                             className="border border-gray-300 rounded p-2 text-gray-600"
                             onChange={onSortChange}
                         >
-                            <option value="Newest">Sort by: Most played</option>
-                            <option value="Oldest">Sort by: Least playe</option>
+                            <option value="Most played">Sort by: Most played</option>
+                            <option value="Least played">Sort by: Least played</option>
                             <option value="Highest Rated">Sort by: Highest Rated</option>
                         </select>
                     </div>
                     <div className="grid grid-cols-4 gap-4">
-                        {filteredQuizzes.map((quizz, index) => (
+                        {filteredQuizzesExplore.map((quizz, index) => (
                             <QuizzCard key={index} quizz={quizz} />
                         ))}
                     </div>

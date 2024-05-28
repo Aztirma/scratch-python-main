@@ -13,11 +13,9 @@ const initialDummyQuizz = [
         rating: 4.5,
         questions: [
             { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' }
         ],
-
+        isImported: false,
+        isPreviouslyUsed: false,
     },
     {
         name: 'Visual Programming for Everyone',
@@ -27,24 +25,21 @@ const initialDummyQuizz = [
         rating: 4.7,
         questions: [
             { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' }
         ],
-
+        isImported: true,
+        isPreviouslyUsed: true,
     },
     {
         name: 'Logic and Control Structures',
         plays: '31.9K',
-        isDraft: false,
+        isDraft: true,
         creator: 'admin',
         rating: 3.7,
         questions: [
             { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' }
         ],
+        isImported: false,
+        isPreviouslyUsed: false,
     },
     {
         name: 'Multisensory Elements in Programming',
@@ -54,10 +49,9 @@ const initialDummyQuizz = [
         rating: 3.0,
         questions: [
             { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' }
         ],
+        isImported: true,
+        isPreviouslyUsed: true,
     },
     {
         name: 'Multisensory Elements',
@@ -67,12 +61,10 @@ const initialDummyQuizz = [
         rating: 4.0,
         questions: [
             { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' },
-            { question: 'What is the capital of France?', options: ['New York', 'London', 'Paris', 'Dublin'], correctAnswer: 'Paris' }
         ],
+        isImported: false,
+        isPreviouslyUsed: true,
     }
-
 ];
 
 // Función para filtrar quizzes
@@ -84,10 +76,10 @@ const filterQuizzes = (quizzes, searchTerm) => {
 const sortQuizzes = (quizzes, sortOption) => {
     let sortedQuizzes = [...quizzes];
     switch (sortOption) {
-        case 'Newest':
+        case 'Most played':
             sortedQuizzes.sort((a, b) => parseFloat(b.plays) - parseFloat(a.plays));
             break;
-        case 'Oldest':
+        case 'Least played':
             sortedQuizzes.sort((a, b) => parseFloat(a.plays) - parseFloat(b.plays));
             break;
         case 'Highest Rated':
@@ -101,35 +93,66 @@ const sortQuizzes = (quizzes, sortOption) => {
 
 // Componente funcional que provee el contexto
 const QuizzProvider = ({ children }) => {
-    // Definimos el estado para los quizzes y otras variables de estado necesarias
     const [quizzes, setQuizzes] = useState(initialDummyQuizz);
-    const [filteredQuizzes, setFilteredQuizzes] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [sortOption, setSortOption] = useState('Newest');
 
-    // useEffect para filtrar y ordenar los quizzes cada vez que cambian
+    // Estados y funciones para ExploreQuizz
+    const [filteredQuizzesExplore, setFilteredQuizzesExplore] = useState([]);
+    const [searchTermExplore, setSearchTermExplore] = useState('');
+    const [sortOptionExplore, setSortOptionExplore] = useState('Most played');
+
+    // Estados y funciones para LibraryQuizz
+    const [filteredQuizzesLibrary, setFilteredQuizzesLibrary] = useState([]);
+    const [searchTermLibrary, setSearchTermLibrary] = useState('');
+    const [sortOptionLibrary, setSortOptionLibrary] = useState('Most played');
+    const [libraryCategory, setLibraryCategory] = useState('all');
+
     useEffect(() => {
-        let filtered = filterQuizzes(quizzes, searchTerm);
-        let sorted = sortQuizzes(filtered, sortOption);
-        setFilteredQuizzes(sorted);
-    }, [quizzes, searchTerm, sortOption]);
+        let filtered = filterQuizzes(quizzes, searchTermExplore);
+        let sorted = sortQuizzes(filtered, sortOptionExplore);
+        setFilteredQuizzesExplore(sorted);
+    }, [quizzes, searchTermExplore, sortOptionExplore]);
 
-    const handleSearchChange = (searchTerm) => {
-        setSearchTerm(searchTerm);
-    };
+    useEffect(() => {
+        let filtered = filterQuizzes(quizzes, searchTermLibrary);
 
-    const handleSortChange = (sortOption) => {
-        setSortOption(sortOption);
-    };
+        switch (libraryCategory) {
+            case 'created':
+                filtered = filtered.filter(quizz => quizz.creator == 'admin');
+                break;
+            case 'imported':
+                filtered = filtered.filter(quizz => quizz.isImported);
+                break;
+            case 'previouslyUsed':
+                filtered = filtered.filter(quizz => quizz.isPreviouslyUsed);
+                break;
+            case 'published':
+                filtered = filtered.filter(quizz => quizz.creator == 'admin' && !quizz.isDraft);
+                break;
+            case 'drafts':
+                filtered = filtered.filter(quizz => quizz.creator == 'admin' && quizz.isDraft);
+                break;
+            case 'all':
+            default:
+                break;
+        }
 
-    // Retornamos el proveedor del contexto con los valores y funciones que queremos compartir
+        let sorted = sortQuizzes(filtered, sortOptionLibrary);
+        setFilteredQuizzesLibrary(sorted);
+    }, [quizzes, searchTermLibrary, sortOptionLibrary, libraryCategory]);
+
     return (
-        <QuizzContext.Provider 
-            value={{ 
-                quizzes, 
-                filteredQuizzes, 
-                handleSearchChange,
-                handleSortChange }}>
+        <QuizzContext.Provider
+            value={{
+                quizzes,
+                filteredQuizzesExplore,
+                setSearchTermExplore,
+                setSortOptionExplore,
+                filteredQuizzesLibrary,
+                setSearchTermLibrary,
+                setSortOptionLibrary,
+                setLibraryCategory,
+            }}
+        >
             {children}
         </QuizzContext.Provider>
     );
