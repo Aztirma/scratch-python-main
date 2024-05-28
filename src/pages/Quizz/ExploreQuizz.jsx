@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SidebarQuizz from '../../components/SidebarQuizz';
-import { useState } from 'react';
-import useQuizz from '../../hooks/useQuizz';
 import useAuth from '../../hooks/useAuth';
+import useQuizz from '../../hooks/useQuizz';
 
 const ExploreQuizz = () => {
-    const {quizzes} = useQuizz();
-    const {user} = useAuth();
+    const { filteredQuizzesExplore, setSearchTermExplore, setSortOptionExplore } = useQuizz();
+    const { user } = useAuth();
+    const [searchInput, setSearchInput] = useState('');
+    const navigate = useNavigate();
 
-    console.log("User");
-    console.log(user);
-    console.log("Quizzes");
-    console.log(quizzes);
+    const onSearchChange = (e) => {
+        setSearchInput(e.target.value);
+        setSearchTermExplore(e.target.value);
+    };
+
+    const onSortChange = (e) => {
+        setSortOptionExplore(e.target.value);
+    };
+
+    const handleQuizzClick = (id) => {
+        navigate(`/quizz/game/${id}`);
+    };
+
     return (
         <div className="flex h-screen">
             <SidebarQuizz />
@@ -23,36 +34,42 @@ const ExploreQuizz = () => {
                             type="text"
                             placeholder="Search for tests on any topic"
                             className="py-3 px-6 w-2/3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            value={searchInput}
+                            onChange={onSearchChange}
                         />
                     </div>
-                    <h2 className="text-2xl font-bold mb-4">Quizz</h2>
-                    <div className="grid grid-cols-4 gap-4">
-                        <div className="bg-gray-200 p-4 rounded-lg shadow">
-                            <div className="h-40 bg-pink-200 mb-2"></div>
-                            <h3 className="text-lg font-bold">Introduction to Programming with Python</h3>
-                            <p>4 Questions · 140.4K plays</p>
-                        </div>
-                        <div className="bg-gray-200 p-4 rounded-lg shadow">
-                            <div className="h-40 bg-pink-200 mb-2"></div>
-                            <h3 className="text-lg font-bold">Visual Programming for Everyone</h3>
-                            <p>10 Slides · 12.8K plays</p>
-                        </div>
-                        <div className="bg-gray-200 p-4 rounded-lg shadow">
-                            <div className="h-40 bg-pink-200 mb-2"></div>
-                            <h3 className="text-lg font-bold">Logic and Control Structures</h3>
-                            <p>10 Questions · 31.9K plays</p>
-                        </div>
-                        <div className="bg-gray-200 p-4 rounded-lg shadow">
-                            <div className="h-40 bg-pink-200 mb-2"></div>
-                            <h3 className="text-lg font-bold">Multisensory Elements in Programming</h3>
-                            <p>10 Questions · 31.9K plays</p>
-                        </div>
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-2xl font-bold">Quizzes</h2>
+                        <select
+                            className="border border-gray-300 rounded p-2 text-gray-600"
+                            onChange={onSortChange}
+                        >
+                            <option value="Most played">Sort by: Most played</option>
+                            <option value="Least played">Sort by: Least played</option>
+                            <option value="Highest Rated">Sort by: Highest Rated</option>
+                        </select>
                     </div>
-                    <div className="flex justify-end mt-4">
-                        <button className="bg-purple-500 text-white rounded-lg py-2 px-4">See more</button>
+                    <div className="grid grid-cols-4 gap-4">
+                        {filteredQuizzesExplore && filteredQuizzesExplore.map((quizz, index) => (
+                            <QuizzCard
+                                key={index}
+                                quizz={quizz}
+                                onClick={() => handleQuizzClick(quizz.id)}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>
+        </div>
+    );
+};
+
+const QuizzCard = ({ quizz, onClick }) => {
+    return (
+        <div className="bg-gray-200 p-4 rounded-lg shadow cursor-pointer" onClick={onClick}>
+            <div className="h-40 bg-pink-200 mb-2"></div>
+            <h3 className="text-lg font-bold">{quizz.name}</h3>
+            <p>{quizz.questions.length} Questions · {quizz.plays} plays · Rating: {quizz.rating}</p>
         </div>
     );
 };
