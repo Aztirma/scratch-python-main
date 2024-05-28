@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SidebarLibrary from '../../components/SidebarLibrary';
 import SidebarQuizz from '../../components/SidebarQuizz';
 import useQuizz from '../../hooks/useQuizz';
@@ -7,6 +8,7 @@ const LibraryQuizz = () => {
     const { filteredQuizzesLibrary, setSearchTermLibrary, setSortOptionLibrary, setLibraryCategory } = useQuizz();
     const [searchInput, setSearchInput] = useState('');
     const [activeSection, setActiveSection] = useState('all');
+    const navigate = useNavigate();
 
     const onSearchChange = (e) => {
         setSearchInput(e.target.value);
@@ -39,6 +41,10 @@ const LibraryQuizz = () => {
                 </button>
             </div>
         );
+    };
+
+    const handlePlayClick = (id) => {
+        navigate(`/quizz/game/${id}`);
     };
 
     return (
@@ -83,7 +89,12 @@ const LibraryQuizz = () => {
                                 </div>
                                 <div className="flex space-x-2">
                                     <button className="bg-gray-200 text-gray-800 rounded-lg py-2 px-4">Share</button>
-                                    <button className="bg-purple-500 text-white rounded-lg py-2 px-4">Play</button>
+                                    <button 
+                                        className="bg-purple-500 text-white rounded-lg py-2 px-4"
+                                        onClick={() => handlePlayClick(quizz.id)}
+                                    >
+                                        Play
+                                    </button>
                                 </div>
                             </div>
                         ))}
