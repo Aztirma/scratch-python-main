@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useQuizz from '../../hooks/useQuizz';
 
 const QuizzGame = () => {
@@ -8,6 +8,7 @@ const QuizzGame = () => {
     const quizz = quizzes.find(q => q.id === parseInt(id));
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
+    const navigate = useNavigate();
 
     if (!quizz) {
         return (
@@ -28,9 +29,13 @@ const QuizzGame = () => {
         setShowResults(true);
     };
 
+    const handleBack = () => {
+        navigate(-1);  // Navegar a la página anterior
+    };
+
     return (
         <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-            <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl">
+            <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl relative">
                 <h1 className="text-3xl font-bold text-purple-600 mb-4">{quizz.name}</h1>
                 <div className="space-y-6">
                     {quizz.questions.map((question, index) => (
@@ -59,14 +64,22 @@ const QuizzGame = () => {
                         </div>
                     ))}
                 </div>
-                {!showResults && (
+                <div className="flex justify-between mt-8">
                     <button
-                        onClick={handleSubmit}
-                        className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700"
+                        onClick={handleBack}
+                        className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg shadow hover:bg-gray-400"
                     >
-                        Submit
+                        Volver
                     </button>
-                )}
+                    {!showResults && (
+                        <button
+                            onClick={handleSubmit}
+                            className="px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700"
+                        >
+                            Submit
+                        </button>
+                    )}
+                </div>
             </div>
         </div>
     );
