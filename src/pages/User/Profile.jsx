@@ -1,89 +1,114 @@
-import React from 'react';
-import SidebarProfile from '../../components/SidebarProfile';
+import EditIcon from '@mui/icons-material/Edit';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import React, { useState } from 'react';
+import SidebarProfile from '../../components/SidebarProfile';
 
 const Profile = () => {
+    const [fullName, setFullName] = useState('Komi Komi');
+    const [userName, setUserName] = useState('komi');
+    const [email, setEmail] = useState('komi@example.com');
+    const [profilePic, setProfilePic] = useState(null);
+
+    const handleProfilePicChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            setProfilePic(URL.createObjectURL(e.target.files[0]));
+        }
+    };
+
+    const handleUpdateInfo = () => {
+        // Aquí puedes manejar la actualización del perfil del usuario
+        alert('Profile updated!');
+    };
+
+    const handleCancelUpdate = () => {
+        // Aquí puedes manejar la cancelación de los cambios
+        alert('Update canceled');
+    };
+
     return (
         <div className='flex'>
             <SidebarProfile />
-            <div className="flex-1 p-8">
-                <div className="bg-white shadow-md rounded-lg p-6 mb-8">
-                    <div className="flex items-center mb-6">
-                        <div className="h-24 w-24  rounded-full flex items-center justify-center mr-6">
-                            <AccountCircleIcon className="text-gray-400" style={{ fontSize: 100 }} />
+            <div className="flex-1 p-8 flex space-x-8">
+                <div className="bg-white shadow-md rounded-lg p-6 w-1/3 relative">
+                    <div className="text-center">
+                        <div className="relative mb-4">
+                            <img
+                                src={profilePic || 'default_profile_pic.png'}
+                                alt="Profile"
+                                className="h-24 w-24 rounded-full mx-auto"
+                            />
+                            <label className="absolute bottom-0 right-0 bg-white p-1 rounded-full cursor-pointer">
+                                <EditIcon className="text-gray-500" />
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                    onChange={handleProfilePicChange}
+                                />
+                            </label>
                         </div>
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Komi Komi</h1>
-                            <p className="text-gray-600">Computer Science</p>
-                            <div className="flex items-center text-gray-500 mt-2">
-                                <LocationOnIcon className="mr-1" />
-                                <span>Lima - 02:15 AM</span>
-                            </div>
+                        <h1 className="text-2xl font-bold text-gray-800">{fullName}</h1>
+                        <p className="text-gray-600">{userName}</p>
+                        <div className="flex items-center text-gray-500 mt-2 justify-center">
+                            <LocationOnIcon className="mr-1" />
+                            <span>Lima - 02:15 AM</span>
                         </div>
-                        <div className="ml-auto text-gray-500">
+                        <div className="text-gray-500 mt-4">
                             <StarBorderIcon className="mr-1" />
                             Top rated
                         </div>
                     </div>
-                    <div className="mb-4">
-                        <h2 className="text-lg font-bold text-gray-800 mb-2">Overview</h2>
-                        <p className="text-gray-600">
-                            I am a computer science student at the National University of Engineering. I consider myself a passionate,
-                            self-taught student with a strong foundation in algorithms, mathematics, and data structures.
-                            I have knowledge about web development such as the use of frameworks and different programming
-                            languages. I also have skills about managing database managers. I am looking to leverage my development
-                            skills with a focus on collaboration, communication, and creativity.
-                        </p>
-                    </div>
-                    {/* <div className="flex justify-between text-gray-800">
-                        <div className="text-center">
-                            <p className="text-xl font-bold">S/8.54</p>
-                            <p className="text-gray-500">Hourly rate</p>
-                        </div>
-                        <div className="text-center">
-                            <p className="text-xl font-bold">S/1k+</p>
-                            <p className="text-gray-500">Total earned</p>
-                        </div>
-                        <div className="text-center">
-                            <p className="text-xl font-bold">2+</p>
-                            <p className="text-gray-500">Jobs finished</p>
-                        </div>
-                        <div className="text-center">
-                            <p className="text-xl font-bold">2000+</p>
-                            <p className="text-gray-500">Hours worked</p>
-                        </div>
-                    </div> */}
                 </div>
-                {/* <div className="bg-white shadow-md rounded-lg p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-bold text-gray-800">Progress Chart</h2>
-                        <select className="border border-gray-300 rounded p-2 text-gray-600">
-                            <option>Sort by: Newest</option>
-                            <option>Sort by: Oldest</option>
-                            <option>Sort by: Highest Rated</option>
-                        </select>
+
+                <div className="bg-white shadow-md rounded-lg p-6 w-2/3">
+                    <h2 className="text-lg font-bold text-gray-800 mb-4">Edit Profile</h2>
+                    <div className="mb-4">
+                        <label className="block text-gray-700">Full Name</label>
+                        <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-lg"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                        />
                     </div>
-                    <div className="border-t border-gray-200 pt-4">
-                        <h3 className="text-md font-bold text-gray-800">G&S <span className="text-gray-500">September 2022</span></h3>
-                        <div className="flex items-center text-yellow-500">
-                            <StarIcon />
-                            <StarIcon />
-                            <StarBorderIcon />
-                            <StarBorderIcon />
-                            <StarBorderIcon />
-                        </div>
-                        <p className="text-gray-600 mt-2">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt imperdiet aliquet. Integer malesuada ligula mollis velit malesuada vehicula. Aenean odio mauris, fringilla eget consectetur quis, molestie quis eros. Nam aliquam et nisl ut auctor. Nam efficitur risus in ante cursus, sed rutrum libero elementum. Nullam suscipit fermentum ex elementum venenatis. Phasellus tempus tellus nisi, et rhoncus nunc convallis vitae. Etiam faucibus leo lorem, vel feugiat lectus vehicula et. Aenean scelerisque a mauris sit amet tempor. Praesent condimentum, risus vitae fermentum egestas, quam elit gravida orci, ac blandit felis ex nec enim. Phasellus gravida leo nec ipsum condimentum laoreet. Nulla nec commodo ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus
-                        </p>
-                        <p className="text-gray-800 font-bold mt-4">S/ 1200</p>
+                    <div className="mb-4">
+                        <label className="block text-gray-700">Username</label>
+                        <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-lg"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                        />
                     </div>
-                </div> */}
+                    <div className="mb-4">
+                        <label className="block text-gray-700">Email Address</label>
+                        <input
+                            type="email"
+                            className="w-full p-2 border border-gray-300 rounded-lg"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex space-x-4">
+                        <button
+                            className="px-6 py-2 bg-purple-500 hover:bg-purple-700 text-white rounded-lg"
+                            onClick={handleUpdateInfo}
+                        >
+                            Save Changes
+                        </button>
+                        <button
+                            className="px-6 py-2 bg-gray-300 hover:bg-gray-500 text-black rounded-lg"
+                            onClick={handleCancelUpdate}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
 
 export default Profile;
+

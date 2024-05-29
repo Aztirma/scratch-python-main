@@ -1,3 +1,4 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import React, { useState } from 'react';
@@ -35,9 +36,7 @@ const Header = () => {
                     {/* <Link to="/create" className="text-purple-700 hover:text-purple-900">Create</Link> */}
                     <Link to="/tutorial" className="text-purple-700 hover:text-purple-900">Tutorial</Link>
                     <Link to="/quizz" className="text-purple-700 hover:text-purple-900">Quizz</Link>
-
                     <Link to="/support" className="text-purple-700 hover:text-purple-900">Suggestions</Link>
-
                     {/* <Link to="/support" className="text-purple-700 hover:text-purple-900">Support</Link> */}
                     <Link to="/about" className="text-purple-700 hover:text-purple-900">About us</Link>
                 </nav>
@@ -53,7 +52,6 @@ const Header = () => {
                         <KeyboardVoiceIcon className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
                     </button>
                 </div>
-                {/* <SettingsIcon className="text-gray-700 cursor-pointer" /> */}
                 <NotificationsIcon
                     className="text-gray-700 cursor-pointer"
                     onClick={toggleNotificationsDropdown}
@@ -61,19 +59,19 @@ const Header = () => {
                 {notificationsDropdownVisible && (
                     <div className="absolute right-0 mt-60 w-80 bg-white border rounded-md shadow-lg">
                         <p className="px-4 py-2 text-gray-800 border-b">Notifications</p>
-                        <div >
+                        <div>
                             <p className="px-4 py-2 text-gray-800 hover:bg-purple-100">Notification 1</p>
                             <p className="px-4 py-2 text-gray-800 hover:bg-purple-100">Notification 2</p>
                             <p className="px-4 py-2 text-gray-800 hover:bg-purple-100">Notification 3</p>
                             <p className="px-4 py-2 text-gray-800 hover:bg-purple-100">Notification 4</p>
                         </div>
                     </div>
-                )}                <div className="relative">
-                    <img
-                        src="/path/to/profile-pic.jpg"
-                        alt="Profile"
-                        className="h-10 w-10 rounded-full cursor-pointer"
-                        onClick={toggleProfileDropdown}
+                )}
+                <div className="relative">
+                    <AccountCircleIcon 
+                        className="text-gray-700 cursor-pointer" 
+                        style={{ fontSize: 40 }} 
+                        onClick={toggleProfileDropdown} 
                     />
                     {profileDropdownVisible && (
                         <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
