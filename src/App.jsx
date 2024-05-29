@@ -9,17 +9,18 @@ import Tutorial from "./pages/Tutorial/Tutorial"
 import Profile from "./pages/User/Profile.jsx"
 
 //Ale agregadoa
-import ExploreQuizz from "./pages/Quizz/ExploreQuizz"
-import LibraryQuizz from "./pages/Quizz/LibraryQuizz"
-import LoadingPage from "./pages/Quizz/LoadingPage.jsx"
-import QuizzGame from "./pages/Quizz/QuizzGame.jsx"
-import ReportQuizz from "./pages/Quizz/ReportQuizz.jsx"
-
 import P01 from "./pages/Antiguo/P01.jsx"
 import P02 from "./pages/Antiguo/P02.jsx"
 import P03 from "./pages/Antiguo/P03.jsx"
 import P04 from "./pages/Antiguo/P04.jsx"
 import Voiceflow from './pages/Antiguo/Voiceflow.jsx'
+import ExploreQuizz from "./pages/Quizz/ExploreQuizz"
+import LibraryQuizz from "./pages/Quizz/LibraryQuizz"
+import LoadingPage from "./pages/Quizz/LoadingPage.jsx"
+import QuizzGame from "./pages/Quizz/QuizzGame.jsx"
+import ReportQuizz from "./pages/Quizz/ReportQuizz.jsx"
+import ExploreTutorial from "./pages/Tutorial/ExploreTutorial"
+import LibraryTutorial from "./pages/Tutorial/LibraryTutorial"
 
 
 import { AuthProvider } from "./context/AuthProvider.jsx"
@@ -61,6 +62,10 @@ const App = () => {
 
                             <Route path="/quizz" element={<PrivateRoute><QuizzContainer /></PrivateRoute>} />
                             <Route path="/quizz/create" element={<PrivateRoute><CreateQuizz /></PrivateRoute>} />
+
+                            <Route path="/tutorial/explore" element={<PrivateRoute><ExploreTutorial /></PrivateRoute>} />
+                            <Route path="/tutorial/library" element={<PrivateRoute><LibraryTutorial /></PrivateRoute>} />
+
 
                             {/* <Route path="/support" element={<PrivateRoute><Support /></PrivateRoute>} /> */}
                             {/* <Route path="/support" element={<PrivateRoute><Voiceflow /></PrivateRoute>} /> */}
