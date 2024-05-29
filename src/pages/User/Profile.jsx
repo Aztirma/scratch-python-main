@@ -57,7 +57,7 @@ const Profile = () => {
                         </div>
                     </div> */}
                 </div>
-                <div className="bg-white shadow-md rounded-lg p-6">
+                {/* <div className="bg-white shadow-md rounded-lg p-6">
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-lg font-bold text-gray-800">Progress Chart</h2>
                         <select className="border border-gray-300 rounded p-2 text-gray-600">
@@ -76,11 +76,11 @@ const Profile = () => {
                             <StarBorderIcon />
                         </div>
                         <p className="text-gray-600 mt-2">
-                            Por si lo llegas a leer trabajé en G&S, fue el lugar que te conté que entré como avanzado xd no sabía nada aaaaaaaaaaaaaaaa pipipi, lo de arriba es mi cv en inglés xd.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt imperdiet aliquet. Integer malesuada ligula mollis velit malesuada vehicula. Aenean odio mauris, fringilla eget consectetur quis, molestie quis eros. Nam aliquam et nisl ut auctor. Nam efficitur risus in ante cursus, sed rutrum libero elementum. Nullam suscipit fermentum ex elementum venenatis. Phasellus tempus tellus nisi, et rhoncus nunc convallis vitae. Etiam faucibus leo lorem, vel feugiat lectus vehicula et. Aenean scelerisque a mauris sit amet tempor. Praesent condimentum, risus vitae fermentum egestas, quam elit gravida orci, ac blandit felis ex nec enim. Phasellus gravida leo nec ipsum condimentum laoreet. Nulla nec commodo ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus
                         </p>
                         <p className="text-gray-800 font-bold mt-4">S/ 1200</p>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
