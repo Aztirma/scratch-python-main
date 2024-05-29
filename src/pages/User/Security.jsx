@@ -9,17 +9,17 @@ const Security = () => {
             <SidebarProfile />
             <div className="flex-1 p-8">
                 <div className="flexmb-8">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-4">Security</h1>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-4">Seguridad</h1>
                     <div className='flex w-full'>
                         <div className="flex  mb-4 mr-20 w-1/3 mt-5">
                             <LockOutlinedIcon className="text-gray-500 mr-2" />
-                            <h2 className="text-2xl font-bold text-gray-700">Change Password</h2>
+                            <h2 className="text-2xl font-bold text-gray-700">Cambiar contraseña</h2>
                         </div>
                         <div className="bg-white shadow-md rounded-lg p-6 w-2/3">
                             <form>
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="current-password">
-                                        Current password
+                                        Contraseña actual
                                     </label>
                                     <input
                                         type="password"
@@ -30,7 +30,7 @@ const Security = () => {
                                 </div>
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="new-password">
-                                        New password
+                                        Nueva contraseña
                                     </label>
                                     <input
                                         type="password"
@@ -41,7 +41,7 @@ const Security = () => {
                                 </div>
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirm-password">
-                                        Confirm password
+                                        Confirmar contraseña
                                     </label>
                                     <input
                                         type="password"
@@ -54,7 +54,7 @@ const Security = () => {
                                     type="submit"
                                     className="bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                 >
-                                    Change password
+                                    Cambiar contraseña
                                 </button>
                             </form>
                         </div>
@@ -64,15 +64,15 @@ const Security = () => {
                 <div>
                     <div className="flex items-center mb-4">
                         <SecurityIcon className="text-gray-500 mr-2" />
-                        <h2 className="text-2xl font-bold text-gray-700">2-step Authentication</h2>
+                        <h2 className="text-2xl font-bold text-gray-700">Autenticación con 2 pasos</h2>
                     </div>
                     <div className="bg-white shadow-md rounded-lg p-6">
                         <p className="text-gray-600 mb-4">
-                            Additional level of security for your account with a second authentication step</p>
+                        Nivel adicional de seguridad para su cuenta con un segundo paso de autenticación</p>
                         <p className="text-gray-600 mb-4">
-                            2-step authentication is disabled</p>
+                        Autenticación con 2 pasos está deshabilitada</p>
                         <p className="text-gray-600 mb-4">
-                            If we detect a login from an unknown device or browser, we will ask for your password and a verification code</p>
+                        Si detectamos un inicio de sesión desde un dispositivo o navegador desconocido, le solicitaremos su contraseña y un código de verificación.                            </p>
                         <button
                             type="button"
                             className="bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

@@ -21,20 +21,20 @@ const SidebarQuizz = ({ onOpenModal }) => {
                 onClick={onOpenModal}
             >
                 <AddCircleOutlineIcon className="mr-2" />
-                <span>Create</span>
+                <span>Crear</span>
             </button>
             <nav className="flex flex-col space-y-4">
                 <Link to="/explore" className={getLinkClassName('/explore')}>
                     <ExploreIcon className="mr-3" />
-                    <span>Explore</span>
+                    <span>Explorar</span>
                 </Link>
                 <Link to="/library" className={getLinkClassName('/library')}>
                     <BorderAllIcon className="mr-3" />
-                    <span>My Library</span>
+                    <span>Mi biblioteca</span>
                 </Link>
                 <Link to="/reports" className={getLinkClassName('/reports')}>
                     <HomeIcon className="mr-3" />
-                    <span>Reports</span>
+                    <span>Reportes</span>
                 </Link>
             </nav>
         </div>

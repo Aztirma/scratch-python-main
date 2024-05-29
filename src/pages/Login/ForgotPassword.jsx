@@ -19,9 +19,9 @@ const ForgotPassword = () => {
             <HeaderLogin />
             <div className="flex flex-col items-center justify-center min-h-screen bg-white">
                 <SignpostIcon style={{ fontSize: 150 }} className="mb-4 text-purple-principal" />
-                <h1 className="text-3xl font-bold mb-2">Forgot your password?</h1>
+                <h1 className="text-3xl font-bold mb-2">Olvidaste tu contraseña?</h1>
                 <p className="text-lg text-gray-600 mb-8">
-                    Enter your email so that we can send you password reset link.
+                    Ingresa tu correo para reestablecer la contraseña.
                 </p>
                 <form onSubmit={handleSubmit} className="w-full max-w-md">
                     <div className="mb-4">
@@ -42,14 +42,14 @@ const ForgotPassword = () => {
                             type="submit"
                             className="w-full bg-purple-principal hover:bg-purple-700 text-white font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline transition duration-300"
                         >
-                            Send Email
+                            Enviar email
                         </button>
                     </div>
                 </form>
                 <div className="flex items-center justify-center mt-4">
                     <ArrowBackIosIcon className="mr-2 text-purple-principal" />
                     <a href="/" className="text-purple-principal hover:underline text-lg">
-                        Back to Login
+                        Regresar al Login
                     </a>
                 </div>
             </div>

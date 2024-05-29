@@ -25,7 +25,7 @@ const SidebarProfile = () => {
             <div className="flex items-center mb-8">
                 <Link to="/profile" className={getLinkClassName('/profile')}>
                 <AccountCircleIcon className="text-gray-500 mr-3" />
-                <span className="text-lg font-bold text-gray-700">My account</span>
+                <span className="text-lg font-bold text-gray-700">Mi perfil</span>
                 </Link>
             </div>
             <nav className="flex flex-col space-y-4">
@@ -35,11 +35,11 @@ const SidebarProfile = () => {
                 </Link> */}
                 <Link to="/security" className={getLinkClassName('/security')}>
                     <LockOutlinedIcon className="mr-3" />
-                    <span>Security</span>
+                    <span>Seguridad</span>
                 </Link>
                 <Link to="/appearance" className={getLinkClassName('/appearance')}>
                     <ArticleOutlinedIcon className="mr-3" />
-                    <span>Appearance</span>
+                    <span>Apariencia</span>
                 </Link>
                 {/* <Link to="/audio" className={getLinkClassName('/audio')}>
                     <CodeOutlinedIcon className="mr-3" />

@@ -34,8 +34,8 @@ const CreateAccount = () => {
         <div>
             <HeaderLogin />
             <div className="flex flex-col items-center justify-center bg-white">
-                <h1 className="text-5xl font-bold text-black mb-4 font-epilogue">Create an account</h1>
-                <h2 className="text-lg text-slate-400 mb-8">Enter your data to create your account.</h2>
+                <h1 className="text-5xl font-bold text-black mb-4 font-epilogue">Crear una cuenta</h1>
+                <h2 className="text-lg text-slate-400 mb-8">Ingresa tus datos.</h2>
 
                 <form onSubmit={handleSubmit} className="p-4 bg-white">
                     <div className="mb-1 w-[30rem]">
@@ -81,7 +81,7 @@ const CreateAccount = () => {
                         />
                         <div className="flex justify-end mt-2">
                             <p>
-                                Already have an account?{' '}
+                                Ya tienes una cuenta?{' '}
 
                                 <a href="/" className="text-base text-purple-principal hover:underline">
                                     Login
@@ -95,7 +95,7 @@ const CreateAccount = () => {
                             type="submit"
                             className="rounded-full bg-purple-principal hover:bg-purple-700 text-white font-bold py-3 px-5 w-full focus:outline-none focus:shadow-outline transition duration-300"
                         >
-                            Continue
+                            Continuar
                         </button>
                     </div>
 

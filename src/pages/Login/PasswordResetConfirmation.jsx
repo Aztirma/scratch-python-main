@@ -13,10 +13,10 @@ const PasswordResetConfirmation = () => {
 
             <div className="flex flex-col items-center justify-center min-h-screen bg-white">
                 <p className="text-lg text-gray-600 mb-8 text-center">
-                    Click on the link we sent to <strong>{newUserEmail}</strong> to finish your account setup.
+                    Click en el enlace que enviamos a <strong>{newUserEmail}</strong> para finalizar su solicitud.
                 </p>
                 <a href="/" className="text-purple-principal hover:underline text-lg">
-                    Back to login
+                    Regresar al Login
                 </a>
             </div>
         </div>

@@ -27,7 +27,7 @@ const ModalCreateQuiz = ({ show, onClose }) => {
         >
             <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-4">What would you like to create?</h2>
+                    <h2 className="text-2xl font-bold mb-4">Que te gustaría crear?</h2>
                     <div className="flex flex-col space-y-4">
                         <button 
                             className="border border-gray-300 rounded-lg p-4 hover:bg-gray-100"
@@ -37,7 +37,7 @@ const ModalCreateQuiz = ({ show, onClose }) => {
                                 <QuizIcon fontSize="large" className="text-purple-principal mr-5" />
                                 <div>
                                     <h3 className="font-bold">Quiz</h3>
-                                    <p>Create from scratch or use Quizizz AI to quickly generate quizzes from any document, link, or message!</p>
+                                    <p>Cree desde cero o utilice Quizizz AI para generar rápidamente cuestionarios a partir de cualquier documento, enlace o mensaje!</p>
                                 </div>
                             </div>
                         </button>
@@ -45,8 +45,8 @@ const ModalCreateQuiz = ({ show, onClose }) => {
                             <div className="flex items-center">
                                 <SchoolIcon fontSize="large" className="text-purple-principal" />
                                 <div>
-                                    <h3 className="font-bold">Lesson</h3>
-                                    <p>Add fun and interactive slides to the assessments students already love.</p>
+                                    <h3 className="font-bold">Lecciones</h3>
+                                    <p>Agregue diapositivas divertidas e interactivas a las evaluaciones que a los estudiantes les encantan.</p>
                                 </div>
                             </div>
                         </button>

@@ -25,8 +25,8 @@ const Login = () => {
             <HeaderLogin />
     
             <div className="flex flex-col items-center justify-center bg-white">
-                <h1 className="text-5xl font-bold text-black mb-4 font-epilogue">Log in</h1>
-                <h2 className="text-lg text-slate-400 mb-8">Enter your details to sign in to your account.</h2>
+                <h1 className="text-5xl font-bold text-black mb-4 font-epilogue">Ingresar</h1>
+                <h2 className="text-lg text-slate-400 mb-8">Ingrese sus datos para ingresar.</h2>
     
                 <form onSubmit={handleSubmit} className="p-4 bg-white">
                     <div className="mb-1 w-[30rem]">
@@ -56,7 +56,7 @@ const Login = () => {
                         />
                         <div className="flex justify-end mt-2">
                             <a href="/forgot-password" className="text-base text-purple-principal hover:underline">
-                                Forgot Password?
+                                Olvido su contraseña?
                             </a>
                         </div>
                     </div>
@@ -66,22 +66,22 @@ const Login = () => {
                             type="submit"
                             className="rounded-full bg-purple-principal hover:bg-purple-700 text-white font-bold py-3 px-5 w-full focus:outline-none focus:shadow-outline transition duration-300"
                         >
-                            Continue
+                            Continuar
                         </button>
                     </div>
     
                     <div className="mt-5 text-center mb-10">
                         <p className="text-base text-neutral-500">
-                            Don't have an account?{' '}
+                            No tienes una cuenta?{' '}
                             <a href="/create-account" className="text-purple-principal hover:underline">
-                                Sign Up
+                                Regístrate
                             </a>
                         </p>
                     </div>
     
                     <div className="flex items-center justify-center mb-6 mt-4">
                         <div className="border-t border-gray-300 w-1/4"></div>
-                        <p className="text-base text-gray-600 px-3">Or Sign up with</p>
+                        <p className="text-base text-gray-600 px-3">O regístrate con</p>
                         <div className="border-t border-gray-300 w-1/4"></div>
                     </div>
                     <div className="flex justify-center space-x-5">

@@ -5,7 +5,7 @@ const Appearance = () => {
     return (
         <div className='flex'>
             <SidebarProfile />
-            <p>Appearance</p>
+            <p>Apariencia</p>
         </div>
     );
 }

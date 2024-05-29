@@ -24,7 +24,7 @@ const Quizz = () => {
                                 </div>
                                 <div>
                                     <h2 className="text-xl font-bold">QUIZZ</h2>
-                                    <h3 className="text-lg font-semibold">Create</h3>
+                                    <h3 className="text-lg font-semibold">Crear</h3>
                                     <p className="text-gray-600">10th course · World languages · 83% accuracy · 2.9K plays</p>
                                     <p className="text-gray-400">Deleted User · 6 years ago</p>
                                 </div>
@@ -63,7 +63,7 @@ const Quizz = () => {
                     <div className="flex space-x-2 mb-8">
                         <button className="bg-purple-principal hover:bg-purple-700 text-white rounded-lg py-2 px-4 flex items-center justify-center w-40">
                             <CoPresentRoundedIcon className="mr-2" />
-                            <span>Start now</span>
+                            <span>Iniciar ahora</span>
                         </button>
                         <button className="bg-purple-100 hover:bg-purple-200 text-purple-principal rounded-lg py-2 px-4 flex items-center justify-center w-40">
                             <WatchLaterIcon className="mr-2" />

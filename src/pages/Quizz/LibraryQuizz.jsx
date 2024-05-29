@@ -68,9 +68,9 @@ const LibraryQuizz = () => {
                             className="border border-gray-300 rounded p-2 text-gray-600"
                             onChange={onSortChange}
                         >
-                            <option value="Most played">Sort by: Most played</option>
-                            <option value="Least played">Sort by: Least played</option>
-                            <option value="Highest Rated">Sort by: Highest Rated</option>
+                            <option value="Most played">Ordenar por: Más jugados</option>
+                            <option value="Least played">Ordenar por: Menor jugados</option>
+                            <option value="Highest Rated">Ordenar por: Más populares</option>
                         </select>
                     </div>
                     {activeSection === 'created' && renderCreatedByMeButtons()}
@@ -83,8 +83,8 @@ const LibraryQuizz = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-semibold">{quizz.name}</h3>
-                                        <p className="text-gray-600">{quizz.questions.length} Questions · {quizz.plays} plays · Rating: {quizz.rating}</p>
-                                        <p className="text-gray-400">Created by {quizz.creator}</p>
+                                        <p className="text-gray-600">{quizz.questions.length} Preguntas · {quizz.plays} plays · Rating: {quizz.rating}</p>
+                                        <p className="text-gray-400">Creado por {quizz.creator}</p>
                                     </div>
                                 </div>
                                 <div className="flex space-x-2">

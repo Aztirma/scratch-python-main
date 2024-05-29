@@ -8,21 +8,21 @@ const SidebarLibrary = ({ setActiveSection }) => {
                 onClick={() => setActiveSection('created')}
             >
                 <i className="icon-class-name"></i>
-                <span>Created by me</span>
+                <span>Creado por mí</span>
             </button>
             <button 
                 className="flex items-center space-x-2 text-gray-700 hover:bg-gray-200 p-2 rounded"
                 onClick={() => setActiveSection('imported')}
             >
                 <i className="icon-class-name"></i>
-                <span>Imported</span>
+                <span>Importado</span>
             </button>
             <button 
                 className="flex items-center space-x-2 text-gray-700 hover:bg-gray-200 p-2 rounded"
                 onClick={() => setActiveSection('all')}
             >
                 <i className="icon-class-name"></i>
-                <span>All my content</span>
+                <span>Todo mi contenido</span>
             </button>
         </div>
     );

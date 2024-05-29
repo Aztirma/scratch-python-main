@@ -82,7 +82,7 @@ const ReportQuizz = () => {
             <SidebarQuizz />
             <div className="flex-1 p-8 bg-gray-100 overflow-auto">
                 <div className="bg-white rounded-lg shadow p-6">
-                    <h2 className="text-2xl font-bold mb-4">Report of Quizzes</h2>
+                    <h2 className="text-2xl font-bold mb-4">Reporte de Quizziz</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-white p-4 rounded-lg shadow">
                             <h3 className="text-xl font-semibold mb-4">Number of Plays</h3>
