@@ -1,7 +1,5 @@
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import SearchIcon from '@mui/icons-material/Search';
-import SettingsIcon from '@mui/icons-material/Settings';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
@@ -38,7 +36,7 @@ const Header = () => {
                     <Link to="/tutorial" className="text-purple-700 hover:text-purple-900">Tutorial</Link>
                     <Link to="/quizz" className="text-purple-700 hover:text-purple-900">Quizz</Link>
 
-                    <a href='https://creator.voiceflow.com/prototype/664fbc81e8061fd0e82cd75e' className="text-purple-700 hover:text-purple-900" target='_blank'>Suggestions</a>
+                    <Link to="/support" className="text-purple-700 hover:text-purple-900">Suggestions</Link>
 
                     {/* <Link to="/support" className="text-purple-700 hover:text-purple-900">Support</Link> */}
                     <Link to="/about" className="text-purple-700 hover:text-purple-900">About us</Link>

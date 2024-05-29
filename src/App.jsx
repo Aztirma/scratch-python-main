@@ -4,6 +4,7 @@ import Create from "./pages/Create"
 import Home from "./pages/Home"
 import CreateQuizz from "./pages/Quizz/CreateQuizz"
 import QuizzContainer from "./pages/Quizz/QuizzContainer"
+import Support from "./pages/Support.jsx"
 import Tutorial from "./pages/Tutorial/Tutorial"
 import Profile from "./pages/User/Profile.jsx"
 
@@ -56,6 +57,8 @@ const App = () => {
                             <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
                             <Route path="/create" element={<PrivateRoute><Create /></PrivateRoute>} />
                             <Route path="/tutorial" element={<PrivateRoute><Tutorial /></PrivateRoute>} />
+                            <Route path="/support" element={<PrivateRoute><Support /></PrivateRoute>} />
+
                             <Route path="/quizz" element={<PrivateRoute><QuizzContainer /></PrivateRoute>} />
                             <Route path="/quizz/create" element={<PrivateRoute><CreateQuizz /></PrivateRoute>} />
 
