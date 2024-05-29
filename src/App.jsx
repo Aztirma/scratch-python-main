@@ -39,7 +39,6 @@ import Published from './pages/User/Published'
 import Schedule from './pages/User/Schedule'
 import Security from './pages/User/Security'
 
-
 const App = () => {
     return (
         <AuthProvider>
