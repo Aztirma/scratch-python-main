@@ -9,7 +9,6 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-
   "blocklyDemoConfig": {
     "title": "DevSite Demo",
     "description": "Blockly demo for developers.google.com/blockly.",
@@ -25,7 +24,6 @@
       "./node_modules/blockly/media/*"
     ]
   },
-
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -34,13 +32,12 @@
     "@mui/material": "^5.15.18",
     "axios": "^1.7.2",
     "blockly": "^11.0.0",
+    "chart.js": "^4.4.3",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-blockly": "^8.1.1",
-    "react-code-blocks": "^0.1.6",
-    "chart.js": "^4.4.3",
-    "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-code-blocks": "^0.1.6",
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.23.0"

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CreateQuizzQuestions = ({ topics, setTopics, onStartQuiz }) => {
     const [newTopic, setNewTopic] = useState("");
     const [selectedTopic, setSelectedTopic] = useState(null);
+    const navigate = useNavigate(); // Usar useNavigate en lugar de useHistory
 
     const handleAddTopic = () => {
         if (newTopic.trim() !== "") {
@@ -13,7 +15,18 @@ const CreateQuizzQuestions = ({ topics, setTopics, onStartQuiz }) => {
 
     const handleTopicClick = (topic) => {
         setSelectedTopic(topic);
-        // Aquí puedes agregar cualquier otra acción que desees realizar al hacer clic en un tema
+    };
+
+    const handleStartQuiz = () => {
+        // Redirige a la página de carga
+        navigate('/loading');
+
+        // Simula un retraso antes de iniciar el cuestionario
+        setTimeout(() => {
+            onStartQuiz();
+            // Aquí podrías redirigir a la página del cuestionario si es necesario
+            // navigate('/quiz-page');
+        }, 2000);
     };
 
     return (
@@ -46,10 +59,9 @@ const CreateQuizzQuestions = ({ topics, setTopics, onStartQuiz }) => {
                     Agregar
                 </button>
             </div>
-            <button className="px-6 py-2 bg-purple-principal hover:bg-purple-700 text-white rounded-lg" onClick={onStartQuiz}>+ Generar preguntas</button>
+            <button className="px-6 py-2 bg-purple-principal hover:bg-purple-700 text-white rounded-lg" onClick={handleStartQuiz}>+ Generar preguntas</button>
         </div>
     );
 };
 
 export default CreateQuizzQuestions;
-

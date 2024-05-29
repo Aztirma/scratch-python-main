@@ -4,15 +4,16 @@ import Create from "./pages/Create"
 import Home from "./pages/Home"
 import CreateQuizz from "./pages/Quizz/CreateQuizz"
 import QuizzContainer from "./pages/Quizz/QuizzContainer"
+import Support from "./pages/Support.jsx"
 import Tutorial from "./pages/Tutorial/Tutorial"
 import Profile from "./pages/User/Profile.jsx"
 
 //Ale agregadoa
 import ExploreQuizz from "./pages/Quizz/ExploreQuizz"
 import LibraryQuizz from "./pages/Quizz/LibraryQuizz"
+import LoadingPage from "./pages/Quizz/LoadingPage.jsx"
 import QuizzGame from "./pages/Quizz/QuizzGame.jsx"
 import ReportQuizz from "./pages/Quizz/ReportQuizz.jsx"
-
 
 import P01 from "./pages/Antiguo/P01.jsx"
 import P02 from "./pages/Antiguo/P02.jsx"
@@ -56,6 +57,8 @@ const App = () => {
                             <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
                             <Route path="/create" element={<PrivateRoute><Create /></PrivateRoute>} />
                             <Route path="/tutorial" element={<PrivateRoute><Tutorial /></PrivateRoute>} />
+                            <Route path="/support" element={<PrivateRoute><Support /></PrivateRoute>} />
+
                             <Route path="/quizz" element={<PrivateRoute><QuizzContainer /></PrivateRoute>} />
                             <Route path="/quizz/create" element={<PrivateRoute><CreateQuizz /></PrivateRoute>} />
 
@@ -82,6 +85,7 @@ const App = () => {
                             <Route path="/explore" element={<PrivateRoute><ExploreQuizz /></PrivateRoute>} />
                             <Route path="/reports" element={<PrivateRoute><ReportQuizz /></PrivateRoute>} />
                             <Route path="/quizz/game/:id" element={<PrivateRoute><QuizzGame /></PrivateRoute>} />
+                            <Route path="/loading" element={<PrivateRoute><LoadingPage /></PrivateRoute>} />
                     </Routes>
                 </BrowserRouter>
             </TutorialProvider>
