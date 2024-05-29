@@ -10,6 +10,7 @@ import Profile from "./pages/User/Profile.jsx"
 //Ale agregadoa
 import ExploreQuizz from "./pages/Quizz/ExploreQuizz"
 import LibraryQuizz from "./pages/Quizz/LibraryQuizz"
+import QuizzGame from "./pages/Quizz/QuizzGame.jsx"
 import ReportQuizz from "./pages/Quizz/ReportQuizz.jsx"
 
 
@@ -18,7 +19,6 @@ import P02 from "./pages/Antiguo/P02.jsx"
 import P03 from "./pages/Antiguo/P03.jsx"
 import P04 from "./pages/Antiguo/P04.jsx"
 import Voiceflow from './pages/Antiguo/Voiceflow.jsx'
-import Support from "./pages/Support"
 
 
 import { AuthProvider } from "./context/AuthProvider.jsx"
@@ -79,6 +79,8 @@ const App = () => {
                         <Route path="/library" element={<PrivateRoute><LibraryQuizz /></PrivateRoute>} />
                         <Route path="/explore" element={<PrivateRoute><ExploreQuizz /></PrivateRoute>} />
                         <Route path="/reports" element={<PrivateRoute><ReportQuizz /></PrivateRoute>} />
+                        <Route path="/quizz/game/:id" element={<PrivateRoute><QuizzGame /></PrivateRoute>} />
+
 
 
                     </Routes>

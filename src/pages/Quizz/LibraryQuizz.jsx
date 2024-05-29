@@ -1,16 +1,52 @@
 import React, { useState } from 'react';
 import SidebarLibrary from '../../components/SidebarLibrary';
 import SidebarQuizz from '../../components/SidebarQuizz';
+import useQuizz from '../../hooks/useQuizz';
 
 const LibraryQuizz = () => {
-    const [activeSection, setActiveSection] = useState('created');
+    const { filteredQuizzesLibrary, setSearchTermLibrary, setSortOptionLibrary, setLibraryCategory } = useQuizz();
+    const [searchInput, setSearchInput] = useState('');
+    const [activeSection, setActiveSection] = useState('all');
+
+    const onSearchChange = (e) => {
+        setSearchInput(e.target.value);
+        setSearchTermLibrary(e.target.value);
+    };
+
+    const onSortChange = (e) => {
+        setSortOptionLibrary(e.target.value);
+    };
+
+    const handleSectionChange = (section) => {
+        setActiveSection(section);
+        setLibraryCategory(section);
+    };
+
+    const renderCreatedByMeButtons = () => {
+        return (
+            <div className="flex mb-4 space-x-4">
+                <button
+                    className={`py-2 px-4 ${activeSection === 'published' ? 'bg-purple-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-lg`}
+                    onClick={() => handleSectionChange('published')}
+                >
+                    Published
+                </button>
+                <button
+                    className={`py-2 px-4 ${activeSection === 'drafts' ? 'bg-purple-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-lg`}
+                    onClick={() => handleSectionChange('drafts')}
+                >
+                    Drafts
+                </button>
+            </div>
+        );
+    };
 
     return (
         <div className="flex h-screen">
             <SidebarQuizz />
             <div className="flex flex-col w-64">
                 <h2 className="text-2xl font-bold p-4 bg-white shadow">My Library</h2>
-                <SidebarLibrary setActiveSection={setActiveSection} />
+                <SidebarLibrary setActiveSection={handleSectionChange} />
             </div>
             <div className="flex-1 p-8 bg-gray-100 overflow-auto">
                 <div className="bg-white rounded-lg shadow p-6">
@@ -19,45 +55,38 @@ const LibraryQuizz = () => {
                             type="text"
                             placeholder="Search in my library"
                             className="py-2 px-4 w-2/3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            value={searchInput}
+                            onChange={onSearchChange}
                         />
+                        <select
+                            className="border border-gray-300 rounded p-2 text-gray-600"
+                            onChange={onSortChange}
+                        >
+                            <option value="Most played">Sort by: Most played</option>
+                            <option value="Least played">Sort by: Least played</option>
+                            <option value="Highest Rated">Sort by: Highest Rated</option>
+                        </select>
                     </div>
-                    <div className="flex mb-4 space-x-4">
-                        <button className="py-2 px-4 bg-purple-500 text-white rounded-lg">Published (2)</button>
-                        <button className="py-2 px-4 bg-gray-200 text-gray-800 rounded-lg">Drafts (0)</button>
-                    </div>
+                    {activeSection === 'created' && renderCreatedByMeButtons()}
                     <div className="space-y-4">
-                        <div className="bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center">
-                            <div className="flex items-center">
-                                <div className="w-16 h-16 mr-4 bg-gray-300 rounded-full">
-                                    <img src="https://via.placeholder.com/64" alt="Logo" className="rounded-full"/>
+                        {filteredQuizzesLibrary.map((quizz, index) => (
+                            <div key={index} className="bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center">
+                                <div className="flex items-center">
+                                    <div className="w-16 h-16 mr-4 bg-gray-300 rounded-full">
+                                        <img src="https://via.placeholder.com/64" alt="Logo" className="rounded-full"/>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">{quizz.name}</h3>
+                                        <p className="text-gray-600">{quizz.questions.length} Questions · {quizz.plays} plays · Rating: {quizz.rating}</p>
+                                        <p className="text-gray-400">Created by {quizz.creator}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-xl font-semibold">Conseq</h3>
-                                    <p className="text-gray-600">10 Questions · 1st Grade · Science</p>
-                                    <p className="text-gray-400">a e · 16 days ago</p>
-                                </div>
-                            </div>
-                            <div className="flex space-x-2">
-                                <button className="bg-gray-200 text-gray-800 rounded-lg py-2 px-4">Share</button>
-                                <button className="bg-purple-500 text-white rounded-lg py-2 px-4">Play</button>
-                            </div>
-                        </div>
-                        <div className="bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center">
-                            <div className="flex items-center">
-                                <div className="w-16 h-16 mr-4 bg-gray-300 rounded-full">
-                                    <img src="https://via.placeholder.com/64" alt="Logo" className="rounded-full"/>
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-semibold">One Piece Challenge</h3>
-                                    <p className="text-gray-600">10 Questions · 2nd Grade · Other</p>
-                                    <p className="text-gray-400">a e · 19 days ago</p>
+                                <div className="flex space-x-2">
+                                    <button className="bg-gray-200 text-gray-800 rounded-lg py-2 px-4">Share</button>
+                                    <button className="bg-purple-500 text-white rounded-lg py-2 px-4">Play</button>
                                 </div>
                             </div>
-                            <div className="flex space-x-2">
-                                <button className="bg-gray-200 text-gray-800 rounded-lg py-2 px-4">Share</button>
-                                <button className="bg-purple-500 text-white rounded-lg py-2 px-4">Play</button>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
