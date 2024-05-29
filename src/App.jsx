@@ -10,9 +10,9 @@ import Profile from "./pages/User/Profile.jsx"
 //Ale agregadoa
 import ExploreQuizz from "./pages/Quizz/ExploreQuizz"
 import LibraryQuizz from "./pages/Quizz/LibraryQuizz"
+import LoadingPage from "./pages/Quizz/LoadingPage.jsx"
 import QuizzGame from "./pages/Quizz/QuizzGame.jsx"
 import ReportQuizz from "./pages/Quizz/ReportQuizz.jsx"
-
 
 import P01 from "./pages/Antiguo/P01.jsx"
 import P02 from "./pages/Antiguo/P02.jsx"
@@ -82,6 +82,7 @@ const App = () => {
                             <Route path="/explore" element={<PrivateRoute><ExploreQuizz /></PrivateRoute>} />
                             <Route path="/reports" element={<PrivateRoute><ReportQuizz /></PrivateRoute>} />
                             <Route path="/quizz/game/:id" element={<PrivateRoute><QuizzGame /></PrivateRoute>} />
+                            <Route path="/loading" element={<PrivateRoute><LoadingPage /></PrivateRoute>} />
                     </Routes>
                 </BrowserRouter>
             </TutorialProvider>
