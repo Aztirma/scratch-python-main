@@ -8,23 +8,23 @@ const TutorialProvider = ({ children }) => {
     { 
       id: 1, 
       title: 'Introducción a Python', 
-      url: 'https://www.youtube.com/embed/4PS8QcRuRHM',
-      author: 'John Doe',
-      views: 12345 
+      url: 'https://www.youtube.com/embed/U07acSMTdr4?si=79qouvu5fyLHRliG',
+      author: 'Christian Poma',
+      views: 2 
     },
     { 
       id: 2, 
       title: 'Bucles en Python', 
-      url: 'https://www.youtube.com/embed/your_video_id2',
-      author: 'Jane Smith',
-      views: 67890 
+      url: 'https://www.youtube.com/embed/5Qhjt_pirGQ?si=tTDSJmc_0re2-pcw',
+      author: 'Christian Poma',
+      views: 3 
     },
     { 
       id: 3, 
       title: 'Funciones en Python', 
-      url: 'https://www.youtube.com/embed/your_video_id3',
-      author: 'Alice Johnson',
-      views: 23456 
+      url: 'https://www.youtube.com/embed/cpnPvh4wUnc?si=O6XeDXpPNxQeZkle',
+      author: 'Christian Poma',
+      views: 4 
     },
     // Más videos aquí...
   ]);
