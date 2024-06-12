@@ -32,11 +32,14 @@ const AuthProvider = ({ children }) => {
     };
 
     const createAccount = (username, password, callback) => {
-        const existingUser = dummyUsers.find(u => u.username === username);
+
+        const existingUser = dummyUsers.find(u => u.username === username); // base de datos
+
         if (existingUser) {
             alert("Username already exists");
             return;
         }
+        
         const newUser = { username, password };
         setDummyUsers([...dummyUsers, newUser]);
         //setUser(newUser);
