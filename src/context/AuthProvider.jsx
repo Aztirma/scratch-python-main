@@ -1,27 +1,27 @@
 import React, { useContext, useState, createContext } from 'react';
+import clienteAxios from '../config/clientAxios';
 
 const AuthContext = createContext();
 
-const initialDummyUsers = [
-    { username: 'admin', password: 'admin' },
-    { username: 'user2', password: 'pass2' }
-];
-
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({});
-    const [dummyUsers, setDummyUsers] = useState(initialDummyUsers);
     const [newUserEmail, setNewUserEmail] = useState('');
-    const [variable1, setVariable1] = useState('initialValue1');
-    const [variable2, setVariable2] = useState('initialValue2');
-    const [variable3, setVariable3] = useState('initialValue3');
 
-    
-    const login = (username, password, callback) => {
-        const foundUser = dummyUsers.find(u => u.username === username && u.password === password);
-        if (foundUser) {
-            setUser(foundUser);
+    const login = async (username, password, callback) => {
+        try {
+            const user = {username: username, password: password};
+            const response = await clienteAxios.post('/user/login/', user);
+            console.log(response.status);
+            if (response.status !== 200) {
+                alert("Invalid username or password");
+                setUser(null);
+                return;
+            }
+            setUser(response.data); // response.data es el usuario
             callback();
-        } else {
+        }
+        catch (error) {
+            console.log(error);
             alert("Invalid username or password");
             setUser(null);
         }
@@ -31,20 +31,19 @@ const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
-    const createAccount = (username, password, callback) => {
-
-        const existingUser = dummyUsers.find(u => u.username === username); // base de datos
-
-        if (existingUser) {
-            alert("Username already exists");
-            return;
+    const createAccount = async (username, password, callback) => {
+        try {
+            const user = {username: username, password: password};
+            const response = await clienteAxios.post('/user/', user);
+            console.log(response.data);
+            setNewUserEmail(username); // response.data es el usuario
+            callback();
         }
-        
-        const newUser = { username, password };
-        setDummyUsers([...dummyUsers, newUser]);
-        //setUser(newUser);
-        setNewUserEmail(username);
-        callback();
+        catch (error) {
+            console.log(error);
+            // alert("Invalid username or password");
+            setUser(null);
+        }
     };
 
     return (
