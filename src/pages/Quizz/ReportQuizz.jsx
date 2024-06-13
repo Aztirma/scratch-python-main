@@ -1,10 +1,21 @@
 import { Chart } from 'chart.js/auto';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import ModalCreateQuizz from '../../components/ModalCreateQuizz';
 import SidebarQuizz from '../../components/SidebarQuizz';
 import QuizzContext from '../../context/QuizzProvider';
 
 const ReportQuizz = () => {
     const { quizzes } = useContext(QuizzContext);
+    const [showModal, setShowModal] = useState(false);
+    
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
     console.log(quizzes);
 
     const quizNames = quizzes.map(quiz => quiz.name);
@@ -79,7 +90,7 @@ const ReportQuizz = () => {
 
     return (
         <div className="flex h-screen">
-            <SidebarQuizz />
+            <SidebarQuizz onOpenModal={handleOpenModal} />
             <div className="flex-1 p-8 bg-gray-100 overflow-auto">
                 <div className="bg-white rounded-lg shadow p-6">
                     <h2 className="text-2xl font-bold mb-4">Reporte de Quizziz</h2>
@@ -99,6 +110,7 @@ const ReportQuizz = () => {
                     </div>
                 </div>
             </div>
+            <ModalCreateQuizz show={showModal} onClose={handleCloseModal} />
         </div>
     );
 };

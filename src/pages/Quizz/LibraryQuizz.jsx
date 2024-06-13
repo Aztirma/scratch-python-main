@@ -1,55 +1,60 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import FilteredQuizzesContainer from '../../components/FilteredQuizzesContainer';
+import LibraryQuizzCard from '../../components/LibraryQuizzCard';
+import ModalCreateQuizz from '../../components/ModalCreateQuizz';
 import SidebarLibrary from '../../components/SidebarLibrary';
 import SidebarQuizz from '../../components/SidebarQuizz';
-import useQuizz from '../../hooks/useQuizz';
+import SortSelect from '../../components/SortSelect';
 
 const LibraryQuizz = () => {
-    const { filteredQuizzesLibrary, setSearchTermLibrary, setSortOptionLibrary, setLibraryCategory } = useQuizz();
     const [searchInput, setSearchInput] = useState('');
+    const [sortOption, setSortOption] = useState('Most played');
     const [activeSection, setActiveSection] = useState('all');
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
-    const onSearchChange = (e) => {
+    const handleSearchChange = (e) => {
         setSearchInput(e.target.value);
-        setSearchTermLibrary(e.target.value);
     };
 
-    const onSortChange = (e) => {
-        setSortOptionLibrary(e.target.value);
+    const handleSortChange = (e) => {
+        setSortOption(e.target.value);
     };
 
     const handleSectionChange = (section) => {
         setActiveSection(section);
-        setLibraryCategory(section);
-    };
-
-    const renderCreatedByMeButtons = () => {
-        return (
-            <div className="flex mb-4 space-x-4">
-                <button
-                    className={`py-2 px-4 ${activeSection === 'published' ? 'bg-purple-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-lg`}
-                    onClick={() => handleSectionChange('published')}
-                >
-                    Published
-                </button>
-                <button
-                    className={`py-2 px-4 ${activeSection === 'drafts' ? 'bg-purple-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-lg`}
-                    onClick={() => handleSectionChange('drafts')}
-                >
-                    Drafts
-                </button>
-            </div>
-        );
     };
 
     const handlePlayClick = (id) => {
         navigate(`/quizz/game/${id}`);
     };
 
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const renderCreatedByMeButtons = () => (
+        <div className="flex mb-4 space-x-4">
+            {['published', 'drafts'].map((section) => (
+                <button
+                    key={section}
+                    className={`py-2 px-4 ${activeSection === section ? 'bg-purple-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-lg`}
+                    onClick={() => handleSectionChange(section)}
+                >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                </button>
+            ))}
+        </div>
+    );
+
     return (
         <div className="flex h-screen">
-            <SidebarQuizz />
+            <SidebarQuizz onOpenModal={handleOpenModal} />
             <div className="flex flex-col w-64">
                 <h2 className="text-2xl font-bold p-4 bg-white shadow">My Library</h2>
                 <SidebarLibrary setActiveSection={handleSectionChange} />
@@ -62,45 +67,28 @@ const LibraryQuizz = () => {
                             placeholder="Search in my library"
                             className="py-2 px-4 w-2/3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                             value={searchInput}
-                            onChange={onSearchChange}
+                            onChange={handleSearchChange}
                         />
-                        <select
-                            className="border border-gray-300 rounded p-2 text-gray-600"
-                            onChange={onSortChange}
-                        >
-                            <option value="Most played">Ordenar por: Más jugados</option>
-                            <option value="Least played">Ordenar por: Menor jugados</option>
-                            <option value="Highest Rated">Ordenar por: Más populares</option>
-                        </select>
+                        <SortSelect value={sortOption} onChange={handleSortChange} />
                     </div>
                     {activeSection === 'created' && renderCreatedByMeButtons()}
-                    <div className="space-y-4">
-                        {filteredQuizzesLibrary.map((quizz, index) => (
-                            <div key={index} className="bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center">
-                                <div className="flex items-center">
-                                    <div className="w-16 h-16 mr-4 bg-gray-300 rounded-full">
-                                        <img src="https://via.placeholder.com/64" alt="Logo" className="rounded-full"/>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-semibold">{quizz.name}</h3>
-                                        <p className="text-gray-600">{quizz.questions.length} Preguntas · {quizz.plays} plays · Rating: {quizz.rating}</p>
-                                        <p className="text-gray-400">Creado por {quizz.creator}</p>
-                                    </div>
-                                </div>
-                                <div className="flex space-x-2">
-                                    <button className="bg-gray-200 text-gray-800 rounded-lg py-2 px-4">Share</button>
-                                    <button 
-                                        className="bg-purple-500 text-white rounded-lg py-2 px-4"
+                    {['published', 'drafts'].includes(activeSection) && renderCreatedByMeButtons()}
+                    <FilteredQuizzesContainer searchTerm={searchInput} sortOption={sortOption} category={activeSection}>
+                        {(filteredQuizzes) => (
+                            <div className="space-y-4">
+                                {filteredQuizzes.map((quizz) => (
+                                    <LibraryQuizzCard
+                                        key={quizz.id}
+                                        quizz={quizz}
                                         onClick={() => handlePlayClick(quizz.id)}
-                                    >
-                                        Play
-                                    </button>
-                                </div>
+                                    />
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                        )}
+                    </FilteredQuizzesContainer>
                 </div>
             </div>
+            <ModalCreateQuizz show={showModal} onClose={handleCloseModal} />
         </div>
     );
 };

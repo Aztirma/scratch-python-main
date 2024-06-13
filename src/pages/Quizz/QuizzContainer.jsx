@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import ModalCreateQuizz from '../../components/ModalCreateQuizz';
 import SidebarQuizz from '../../components/SidebarQuizz';
 import Quizz from './Quizz';
-import ModalCreateQuizz from '../../components/ModalCreateQuizz';
 
 const QuizzContainer = () => {
     const [showModal, setShowModal] = useState(false);
