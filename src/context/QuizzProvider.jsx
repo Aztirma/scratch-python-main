@@ -1,6 +1,5 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
-// Crear el contexto
 const QuizzContext = createContext();
 
 // Datos iniciales de ejemplo
@@ -147,12 +146,94 @@ const initialDummyQuizz = [
     }
 ];
 
-// Componente funcional que provee el contexto
 const QuizzProvider = ({ children }) => {
     const [quizzes, setQuizzes] = useState(initialDummyQuizz);
+    const [questions, setQuestions] = useState([{ question: '', options: ['', ''], correctAnswer: '' }]);
+
+    useEffect(() => {
+        // Función para cargar los quizzes desde el backend al iniciar
+        const fetchQuizzes = async () => {
+            try {
+                const response = await fetch('/api/quizzes');
+                const data = await response.json();
+                setQuizzes(data);
+            } catch (error) {
+                console.error('Error fetching quizzes:', error);
+            }
+        };
+
+        fetchQuizzes();
+    }, []);
+
+    const addQuiz = async (quiz) => {
+        try {
+            const response = await fetch('/api/quizzes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(quiz),
+            });
+
+            if (response.ok) {
+                const newQuiz = await response.json();
+                setQuizzes([...quizzes, newQuiz]);
+            } else {
+                console.error('Error adding quiz:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error adding quiz:', error);
+        }
+    };
+
+    const handleQuestionChange = (index, value) => {
+        const newQuestions = [...questions];
+        newQuestions[index].question = value;
+        setQuestions(newQuestions);
+    };
+
+    const handleOptionChangeAtIndex = (qIndex, oIndex, value) => {
+        const newQuestions = [...questions];
+        newQuestions[qIndex].options[oIndex] = value;
+        setQuestions(newQuestions);
+    };
+
+    const handleCorrectAnswerChange = (index, value) => {
+        const newQuestions = [...questions];
+        newQuestions[index].correctAnswer = value;
+        setQuestions(newQuestions);
+    };
+
+    const handleAddQuestion = () => {
+        setQuestions([...questions, { question: '', options: ['', ''], correctAnswer: '' }]);
+    };
+
+    const handleAddOption = (qIndex) => {
+        const newQuestions = [...questions];
+        newQuestions[qIndex].options.push('');
+        setQuestions(newQuestions);
+    };
+
+    const handleRemoveOption = (qIndex, oIndex) => {
+        const newQuestions = [...questions];
+        newQuestions[qIndex].options.splice(oIndex, 1);
+        setQuestions(newQuestions);
+    };
 
     return (
-        <QuizzContext.Provider value={{ quizzes, setQuizzes }}>
+        <QuizzContext.Provider
+            value={{
+                quizzes,
+                questions,
+                handleQuestionChange,
+                handleOptionChangeAtIndex,
+                handleCorrectAnswerChange,
+                handleAddQuestion,
+                handleAddOption,
+                handleRemoveOption,
+                addQuiz
+            }}
+        >
             {children}
         </QuizzContext.Provider>
     );

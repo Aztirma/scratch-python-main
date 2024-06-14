@@ -1,16 +1,54 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CreateQuizzOptions = ({ handleGenerateQuestions }) => {
     const [selectedOption, setSelectedOption] = useState(null);
+    const navigate = useNavigate();
 
     const handleOptionChange = (option) => {
         setSelectedOption(option);
     };
 
+    const handleCreateQuiz = () => {
+        if (selectedOption === 'fromScratch') {
+            navigate('/quizz/create/manual');
+        } else if (selectedOption === 'suggestion') {
+            navigate('/quizz/create/suggestion');
+        } else {
+            console.log('Opción seleccionada:', selectedOption);
+        }
+    };
+
+    const handleGenerateQuestionsClick = () => {
+        if (selectedOption === 'suggestion') {
+            navigate('/quizz/create/suggestion');
+        }
+    };
+
     return (
         <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md mt-10">
-            <h2 className="text-2xl font-bold mb-4 text-center text-purple-700">Elige cómo te gustaría crear</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center text-purple-700">¿Cómo te gustaría crear?</h2>
             <div className="mb-8">
+                <div
+                    className={`p-4 border ${selectedOption === 'fromScratch' ? 'border-purple-700' : 'border-gray-200'} rounded-lg mb-2 cursor-pointer bg-white hover:bg-purple-100`}
+                    onClick={() => handleOptionChange('fromScratch')}
+                >
+                    <div className="flex items-center">
+                        <input
+                            type="radio"
+                            id="fromScratch"
+                            name="create-option"
+                            checked={selectedOption === 'fromScratch'}
+                            onChange={() => handleOptionChange('fromScratch')}
+                            className="form-radio text-purple-600"
+                        />
+                        <label htmlFor="fromScratch" className="ml-2 text-purple-700 font-semibold">
+                            Crear desde cero
+                        </label>
+                        <span className="block text-gray-500 ml-auto">Utilice más de 15 tipos de preguntas interactivas</span>
+                    </div>
+                </div>
+
                 <div
                     className={`p-4 border ${selectedOption === 'suggestion' ? 'border-purple-700' : 'border-gray-200'} rounded-lg mb-2 cursor-pointer bg-white hover:bg-purple-100`}
                     onClick={() => handleOptionChange('suggestion')}
@@ -25,9 +63,9 @@ const CreateQuizzOptions = ({ handleGenerateQuestions }) => {
                             className="form-radio text-purple-600"
                         />
                         <label htmlFor="suggestion" className="ml-2 text-purple-700 font-semibold">
-                            Añade un tema, una sugerencia o pega tu extracto aquí
+                            Generar a partir de texto
                         </label>
-                        <span className="block text-gray-500 ml-auto">Máximo 10,000 caracteres</span>
+                        <span className="block text-gray-500 ml-auto">Solicita a la IA o pega tu propio texto</span>
                     </div>
                     {selectedOption === 'suggestion' && (
                         <div className="mt-4">
@@ -74,73 +112,14 @@ const CreateQuizzOptions = ({ handleGenerateQuestions }) => {
                                 </div>
                             </div>
                             <div className="flex justify-end mt-4">
-                                <button onClick={handleGenerateQuestions} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">+ Generar preguntas</button>
+                                <button onClick={handleGenerateQuestionsClick} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">+ Generar preguntas</button>
                             </div>
                         </div>
                     )}
                 </div>
 
-                <div
-                    className={`p-4 border ${selectedOption === 'document' ? 'border-purple-700' : 'border-gray-200'} rounded-lg mb-2 cursor-pointer bg-white hover:bg-purple-100`}
-                    onClick={() => handleOptionChange('document')}
-                >
-                    <div className="flex items-center">
-                        <input
-                            type="radio"
-                            id="document"
-                            name="create-option"
-                            checked={selectedOption === 'document'}
-                            onChange={() => handleOptionChange('document')}
-                            className="form-radio text-purple-600"
-                        />
-                        <label htmlFor="document" className="ml-2 text-purple-700 font-semibold">
-                            Utilice un documento existente
-                        </label>
-                    </div>
-                    {selectedOption === 'document' && (
-                        <div className="mt-4 flex justify-between items-center space-x-2">
-                            <button className="p-2 flex-1 bg-purple-200 hover:bg-purple-300 text-purple-700 rounded-lg flex items-center justify-center">
-                                Subir desde el dispositivo
-                            </button>
-                            <button className="p-2 flex-1 bg-purple-200 hover:bg-purple-300 text-purple-700 rounded-lg flex items-center justify-center">
-                                Importar desde Google Drive
-                            </button>
-                            <div className="flex justify-end mt-4">
-                                <button onClick={handleGenerateQuestions} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">+ Generar preguntas</button>
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <div
-                    className={`p-4 border ${selectedOption === 'link' ? 'border-purple-700' : 'border-gray-200'} rounded-lg cursor-pointer bg-white hover:bg-purple-100`}
-                    onClick={() => handleOptionChange('link')}
-                >
-                    <div className="flex items-center">
-                        <input
-                            type="radio"
-                            id="link"
-                            name="create-option"
-                            checked={selectedOption === 'link'}
-                            onChange={() => handleOptionChange('link')}
-                            className="form-radio text-purple-600"
-                        />
-                        <label htmlFor="link" className="ml-2 text-purple-700 font-semibold">
-                            Añade cualquier enlace de la web
-                        </label>
-                    </div>
-                    {selectedOption === 'link' && (
-                        <div className="mt-4 flex items-center">
-                            <input
-                                type="text"
-                                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500"
-                                placeholder="https://www.youtube.com/watch?v=..."
-                            />
-                            <div className="flex justify-end mt-4">
-                                <button onClick={handleGenerateQuestions} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">+ Generar preguntas</button>
-                            </div>
-                        </div>
-                    )}
+                <div className="flex justify-end mt-4">
+                    <button onClick={handleCreateQuiz} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">Siguiente</button>
                 </div>
             </div>
         </div>
