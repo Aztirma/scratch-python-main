@@ -19,6 +19,7 @@ import LibraryQuizz from "./pages/Quizz/LibraryQuizz"
 import LoadingPage from "./pages/Quizz/LoadingPage.jsx"
 import ManualQuizzCreation from './pages/Quizz/ManualQuizzCreation'
 import QuizzGame from "./pages/Quizz/QuizzGame.jsx"
+import QuizzList from "./pages/Quizz/QuizzList.jsx"
 import ReportQuizz from "./pages/Quizz/ReportQuizz.jsx"
 import SuggestionQuizzCreation from './pages/Quizz/SuggestionQuizzCreation.jsx'
 import ExploreTutorial from "./pages/Tutorial/ExploreTutorial"
@@ -63,6 +64,7 @@ const App = () => {
 
                             <Route path="/quizz" element={<PrivateRoute><QuizzContainer /></PrivateRoute>} />
                             <Route path="/quizz/create" element={<PrivateRoute><CreateQuizz /></PrivateRoute>} />
+                            <Route path="/quizz/list" element={<PrivateRoute><QuizzList/></PrivateRoute>} />
                             <Route path="/quizz/create/manual" element={<PrivateRoute><ManualQuizzCreation /></PrivateRoute>} />
                             <Route path="/quizz/create/suggestion" element={<PrivateRoute><SuggestionQuizzCreation/></PrivateRoute>} />
 

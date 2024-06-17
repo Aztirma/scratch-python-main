@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 
+// Crear el contexto
 const QuizzContext = createContext();
 
 // Datos iniciales de ejemplo
@@ -147,44 +148,15 @@ const initialDummyQuizz = [
 ];
 
 const QuizzProvider = ({ children }) => {
-    const [quizzes, setQuizzes] = useState(initialDummyQuizz);
+    const [quizzes, setQuizzes] = useState(() => {
+        const savedQuizzes = localStorage.getItem('quizzes');
+        return savedQuizzes ? JSON.parse(savedQuizzes) : initialDummyQuizz;
+    });
     const [questions, setQuestions] = useState([{ question: '', options: ['', ''], correctAnswer: '' }]);
 
     useEffect(() => {
-        // Función para cargar los quizzes desde el backend al iniciar
-        const fetchQuizzes = async () => {
-            try {
-                const response = await fetch('/api/quizzes');
-                const data = await response.json();
-                setQuizzes(data);
-            } catch (error) {
-                console.error('Error fetching quizzes:', error);
-            }
-        };
-
-        fetchQuizzes();
-    }, []);
-
-    const addQuiz = async (quiz) => {
-        try {
-            const response = await fetch('/api/quizzes', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(quiz),
-            });
-
-            if (response.ok) {
-                const newQuiz = await response.json();
-                setQuizzes([...quizzes, newQuiz]);
-            } else {
-                console.error('Error adding quiz:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error adding quiz:', error);
-        }
-    };
+        localStorage.setItem('quizzes', JSON.stringify(quizzes));
+    }, [quizzes]);
 
     const handleQuestionChange = (index, value) => {
         const newQuestions = [...questions];
@@ -220,10 +192,15 @@ const QuizzProvider = ({ children }) => {
         setQuestions(newQuestions);
     };
 
+    const addQuiz = (quiz) => {
+        setQuizzes([...quizzes, quiz]);
+    };
+
     return (
         <QuizzContext.Provider
             value={{
                 quizzes,
+                setQuizzes,
                 questions,
                 handleQuestionChange,
                 handleOptionChangeAtIndex,

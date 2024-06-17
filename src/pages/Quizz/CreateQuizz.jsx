@@ -1,13 +1,12 @@
-// CreateQuizz.jsx
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import QuizzContext from '../../context/QuizzProvider';
 import CreateQuizzOptions from './CreateQuizzOptions';
-import CreateQuizzQuestions from './CreateQuizzQuestions';
 
 const CreateQuizz = () => {
-    const [showQuestions, setShowQuestions] = useState(false);
+    const navigate = useNavigate();
     const { addQuiz } = useContext(QuizzContext);
-    const [quizName, setQuizName] = useState('');
+    const [showQuestions, setShowQuestions] = useState(false);
     const [questions, setQuestions] = useState([]);
 
     const handleGenerateQuestions = (topic, difficulty, category, numQuestions) => {
@@ -18,19 +17,17 @@ const CreateQuizz = () => {
         ];
         setQuestions(generatedQuestions);
         setShowQuestions(true);
+        navigate('/quizz/create/suggestion');  // Redirigir a la página de sugerencia
     };
 
     const handleCreateQuiz = () => {
-        addQuiz({ name: quizName, questions });
+        addQuiz({ name: 'Nuevo Quizz', questions });
+        navigate('/quizz/list');  // Redirigir a la lista de cuestionarios
     };
 
     return (
         <div className="flex flex-col items-center min-h-screen bg-gray-100">
-            {showQuestions ? (
-                <CreateQuizzQuestions questions={questions} setQuestions={setQuestions} onCreateQuiz={handleCreateQuiz} />
-            ) : (
-                <CreateQuizzOptions setQuizName={setQuizName} handleGenerateQuestions={handleGenerateQuestions} />
-            )}
+            <CreateQuizzOptions handleGenerateQuestions={handleGenerateQuestions} />
         </div>
     );
 }

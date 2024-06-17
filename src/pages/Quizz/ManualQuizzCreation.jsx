@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import QuizzContext from '../../context/QuizzProvider';
 
 const ManualQuizzCreation = () => {
@@ -10,13 +10,44 @@ const ManualQuizzCreation = () => {
         handleAddQuestion, 
         handleAddOption, 
         handleRemoveOption, 
-        handleCreateQuiz 
+        addQuiz 
     } = useContext(QuizzContext);
+
+    const [quizName, setQuizName] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
+    const handleCreateQuiz = () => {
+        const newQuiz = {
+            id: new Date().getTime(), // Asegúrate de tener un ID único
+            name: quizName,
+            plays: '0',
+            isDraft: true,
+            creator: 'current_user', // Esto debería cambiar dependiendo del usuario actual
+            rating: 0,
+            questions
+        };
+        addQuiz(newQuiz);
+        setSuccessMessage('Cuestionario creado con éxito!');
+        setQuizName('');
+        setTimeout(() => setSuccessMessage(''), 3000); // Eliminar el mensaje después de 3 segundos
+    };
 
     return (
         <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md mt-10">
             <h2 className="text-2xl font-bold mb-4 text-center text-purple-700">Crear Quiz Manualmente</h2>
+            {successMessage && (
+                <div className="mb-4 p-2 bg-green-200 text-green-800 rounded-lg">
+                    {successMessage}
+                </div>
+            )}
             <div className="mt-4">
+                <input
+                    type="text"
+                    className="w-full p-2 mb-2 border border-gray-300 rounded-lg focus:ring-purple-500"
+                    placeholder="Nombre del quiz"
+                    value={quizName}
+                    onChange={(e) => setQuizName(e.target.value)}
+                />
                 {questions.map((q, qIndex) => (
                     <div key={qIndex} className="mb-6">
                         <label className="block mb-2 text-purple-700 font-semibold">Pregunta {qIndex + 1}</label>
