@@ -78,9 +78,9 @@ const LibraryQuizz = () => {
                             <div className="space-y-4">
                                 {filteredQuizzes.map((quizz) => (
                                     <LibraryQuizzCard
-                                        key={quizz.id}
+                                        key={quizz._id} // Asegúrate de que estás usando el ID correcto
                                         quizz={quizz}
-                                        onClick={() => handlePlayClick(quizz.id)}
+                                        onClick={() => handlePlayClick(quizz._id)} // Asegúrate de que estás pasando el ID correcto
                                     />
                                 ))}
                             </div>

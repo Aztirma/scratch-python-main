@@ -23,6 +23,7 @@ const ExploreQuizz = () => {
     };
 
     const handleQuizzClick = (id) => {
+        console.log('Quiz ID:', id); // Agrega este console.log para verificar el ID
         navigate(`/quizz/game/${id}`);
     };
 
@@ -60,7 +61,7 @@ const ExploreQuizz = () => {
                                     <ExploreQuizzCard
                                         key={index}
                                         quizz={quizz}
-                                        onClick={() => handleQuizzClick(quizz.id)}
+                                        onClick={() => handleQuizzClick(quizz._id)} // Asegúrate de que estás pasando el ID correcto
                                     />
                                 ))}
                             </div>
