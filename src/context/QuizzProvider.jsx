@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import clienteAxios from '../config/clientAxios';
 
 // Crear el contexto
 const QuizzContext = createContext();
@@ -148,15 +149,20 @@ const initialDummyQuizz = [
 ];
 
 const QuizzProvider = ({ children }) => {
-    const [quizzes, setQuizzes] = useState(() => {
-        const savedQuizzes = localStorage.getItem('quizzes');
-        return savedQuizzes ? JSON.parse(savedQuizzes) : initialDummyQuizz;
-    });
+    const [quizzes, setQuizzes] = useState([]);
     const [questions, setQuestions] = useState([{ question: '', options: ['', ''], correctAnswer: '' }]);
 
     useEffect(() => {
-        localStorage.setItem('quizzes', JSON.stringify(quizzes));
-    }, [quizzes]);
+        const fetchQuizzes = async () => {
+            try {
+                const response = await clienteAxios.get('/quizz');
+                setQuizzes(response.data);
+            } catch (error) {
+                console.error('Error fetching quizzes:', error);
+            }
+        };
+        fetchQuizzes();
+    }, []);
 
     const handleQuestionChange = (index, value) => {
         const newQuestions = [...questions];
@@ -192,16 +198,22 @@ const QuizzProvider = ({ children }) => {
         setQuestions(newQuestions);
     };
 
-    const addQuiz = (quiz) => {
-        setQuizzes([...quizzes, quiz]);
+    const addQuiz = async (quiz) => {
+        try {
+            console.log('Creating quiz with data:', JSON.stringify(quiz, null, 2)); // Debugging line
+            const response = await clienteAxios.post('/quizz', quiz);
+            setQuizzes([...quizzes, response.data]);
+        } catch (error) {
+            console.error('Error adding quiz:', error);
+        }
     };
 
     return (
         <QuizzContext.Provider
             value={{
                 quizzes,
-                setQuizzes,
                 questions,
+                setQuizzes,
                 handleQuestionChange,
                 handleOptionChangeAtIndex,
                 handleCorrectAnswerChange,
