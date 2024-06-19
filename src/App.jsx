@@ -43,7 +43,7 @@ import Progress from './pages/User/Progress'
 import Published from './pages/User/Published'
 import Schedule from './pages/User/Schedule'
 import Security from './pages/User/Security'
-
+import CourseDetail from "./components/CourseDetail"
 const App = () => {
     return (
         <AuthProvider>
@@ -96,6 +96,8 @@ const App = () => {
                             <Route path="/reports" element={<PrivateRoute><ReportQuizz /></PrivateRoute>} />
                             <Route path="/quizz/game/:id" element={<PrivateRoute><QuizzGame /></PrivateRoute>} />
                             <Route path="/loading" element={<PrivateRoute><LoadingPage /></PrivateRoute>} />
+
+                            <Route path="/course/:id" element={<PrivateRoute><CourseDetail /></PrivateRoute>}  />
                     </Routes>
                 </BrowserRouter>
             </TutorialProvider>
