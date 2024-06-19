@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+// src/pages/QuizzGame.jsx
+
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import clienteAxios from '../../config/clientAxios';
+import QuizzContext from '../../context/QuizzProvider';
 
 const QuizzGame = () => {
     const { id } = useParams();
@@ -9,15 +12,13 @@ const QuizzGame = () => {
     const [error, setError] = useState(null);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
+    const { createGameSession } = useContext(QuizzContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuizz = async () => {
             try {
-                const cleanId = id.trim(); // Limpiar el ID
-                console.log(`Fetching quiz with ID: ${cleanId}`);
-                const response = await clienteAxios.get(`/quizz/${cleanId}`);
-                console.log('Quiz fetched:', response.data);
+                const response = await clienteAxios.get(`/quizz/${id}`);
                 setQuizz(response.data);
                 setLoading(false);
             } catch (error) {
@@ -53,8 +54,25 @@ const QuizzGame = () => {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setShowResults(true);
+
+        const correctAnswers = quizz.questions.reduce((acc, question, index) => {
+            return selectedAnswers[index] === question.correctAnswer ? acc + 1 : acc;
+        }, 0);
+
+        const incorrectAnswers = quizz.questions.length - correctAnswers;
+
+        try {
+            await createGameSession({
+                quizzId: quizz._id,
+                correctAnswers,
+                incorrectAnswers
+            });
+            console.log('Game session created successfully');
+        } catch (error) {
+            console.error('Error creating game session:', error);
+        }
     };
 
     const handleBack = () => {

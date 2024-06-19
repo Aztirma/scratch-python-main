@@ -219,6 +219,16 @@ const QuizzProvider = ({ children }) => {
         }
     };
 
+    const createGameSession = async (sessionData) => {
+        try {
+            const response = await clienteAxios.post('/gamesession', sessionData);
+            return response.data;
+        } catch (error) {
+            console.error('Error creating game session:', error);
+        }
+    };
+
+
     return (
         <QuizzContext.Provider
             value={{
@@ -233,7 +243,9 @@ const QuizzProvider = ({ children }) => {
                 handleAddOption,
                 handleRemoveOption,
                 addQuiz,
-                generateQuizzWithLLM
+                generateQuizzWithLLM,
+                createGameSession,
+
             }}
         >
             {children}
