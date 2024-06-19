@@ -1,7 +1,6 @@
+import QuizIcon from '@mui/icons-material/Quiz';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import QuizIcon from '@mui/icons-material/Quiz';
-import SchoolIcon from '@mui/icons-material/School';
 
 const ModalCreateQuiz = ({ show, onClose }) => {
     const navigate = useNavigate();
@@ -41,15 +40,16 @@ const ModalCreateQuiz = ({ show, onClose }) => {
                                 </div>
                             </div>
                         </button>
-                        <button className="border border-gray-300 rounded-lg p-4 hover:bg-gray-100">
+                       {/* <button className="border border-gray-300 rounded-lg p-4 hover:bg-gray-100">
                             <div className="flex items-center">
                                 <SchoolIcon fontSize="large" className="text-purple-principal" />
-                                <div>
-                                    <h3 className="font-bold">Lecciones</h3>
-                                    <p>Agregue diapositivas divertidas e interactivas a las evaluaciones que a los estudiantes les encantan.</p>
-                                </div>
+                            <div>
+                                <h3 className="font-bold">Lecciones</h3>
+                                <p>Agregue diapositivas divertidas e interactivas a las evaluaciones que a los estudiantes les encantan.</p>
                             </div>
-                        </button>
+
+                            </div>
+                        </button>*/}
                     </div>
                 </div>
             </div>

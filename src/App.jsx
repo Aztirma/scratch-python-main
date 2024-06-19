@@ -3,7 +3,6 @@ import About from "./pages/About"
 import Create from "./pages/Create"
 import Home from "./pages/Home"
 import CreateQuizz from "./pages/Quizz/CreateQuizz"
-import QuizzContainer from "./pages/Quizz/QuizzContainer"
 import Support from "./pages/Support.jsx"
 import Tutorial from "./pages/Tutorial/Tutorial"
 import Profile from "./pages/User/Profile.jsx"
@@ -35,6 +34,7 @@ import ForgotPassword from './pages/Login/ForgotPassword'
 import Login from "./pages/Login/Login.jsx"
 import PasswordResetConfirmation from './pages/Login/PasswordResetConfirmation'
 
+import CourseDetail from "./components/CourseDetail"
 import Appearance from './pages/User/Appearance'
 import Audio from './pages/User/Audio'
 import Bookmarks from './pages/User/Bookmarks'
@@ -43,7 +43,6 @@ import Progress from './pages/User/Progress'
 import Published from './pages/User/Published'
 import Schedule from './pages/User/Schedule'
 import Security from './pages/User/Security'
-import CourseDetail from "./components/CourseDetail"
 const App = () => {
     return (
         <AuthProvider>
@@ -62,7 +61,7 @@ const App = () => {
                             <Route path="/tutorial" element={<PrivateRoute><Tutorial /></PrivateRoute>} />
                             <Route path="/support" element={<PrivateRoute><Support /></PrivateRoute>} />
 
-                            <Route path="/quizz" element={<PrivateRoute><QuizzContainer /></PrivateRoute>} />
+                            <Route path="/quizz" element={<PrivateRoute><ExploreQuizz /></PrivateRoute>} />
                             <Route path="/quizz/create" element={<PrivateRoute><CreateQuizz /></PrivateRoute>} />
                             <Route path="/quizz/list" element={<PrivateRoute><QuizzList/></PrivateRoute>} />
                             <Route path="/quizz/create/manual" element={<PrivateRoute><ManualQuizzCreation /></PrivateRoute>} />

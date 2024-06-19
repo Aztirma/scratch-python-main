@@ -14,7 +14,7 @@ const LibraryQuizzCard = ({ quizz, onClick }) => {
                 </div>
             </div>
             <div className="flex space-x-2">
-                <button className="bg-gray-200 text-gray-800 rounded-lg py-2 px-4">Share</button>
+                 {/*<button className="bg-gray-200 text-gray-800 rounded-lg py-2 px-4">Share</button>*/}
                 <button className="bg-purple-500 text-white rounded-lg py-2 px-4" onClick={onClick}>
                     Play
                 </button>

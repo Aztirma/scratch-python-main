@@ -40,7 +40,7 @@ const ExploreQuizz = () => {
             <SidebarQuizz onOpenModal={handleOpenModal} />
             <div className="flex-1 p-8 bg-gray-100 overflow-auto">
                 <div className="bg-white rounded-lg shadow p-6">
-                    <h1 className="text-3xl font-bold mb-4">What are you looking for today?</h1>
+                    <h1 className="text-3xl font-bold mb-4">¿Qué busca hoy?</h1>
                     <div className="flex justify-center mb-8">
                         <input
                             type="text"
