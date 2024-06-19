@@ -1,34 +1,27 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QuizzContext from '../../context/QuizzProvider';
-
+ 
 const CreateQuizzOptions = () => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [prompt, setPrompt] = useState('');
-    const { generateQuizzWithLLM, setQuestions } = useContext(QuizzContext);
+    const { generateQuizzWithLLM } = useContext(QuizzContext);
     const navigate = useNavigate();
 
     const handleOptionChange = (option) => {
         setSelectedOption(option);
     };
 
-    const handleCreateQuiz = () => {
+    const handleCreateQuiz = async () => {
         if (selectedOption === 'fromScratch') {
             navigate('/quizz/create/manual');
         } else if (selectedOption === 'suggestion') {
-            handleGenerateQuestionsClick();
-        } else {
-            console.log('Opción seleccionada:', selectedOption);
-        }
-    };
-
-    const handleGenerateQuestionsClick = async () => {
-        try {
-            const generatedQuiz = await generateQuizzWithLLM(prompt);
-            setQuestions(generatedQuiz.questions);
-            navigate('/quizz/create/suggestion');
-        } catch (error) {
-            console.error('Error generating quiz:', error);
+            try {
+                const generatedQuiz = await generateQuizzWithLLM(prompt);
+                navigate('/quizz/create/suggestion', { state: { generatedQuiz } });
+            } catch (error) {
+                console.error('Error generating quiz:', error);
+            }
         }
     };
 
@@ -78,20 +71,19 @@ const CreateQuizzOptions = () => {
                         <div className="mt-4">
                             <textarea
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500"
-                                maxLength="10000"
                                 placeholder="Quisiera un quiz acerca de conceptos básicos de Python"
+                                maxLength="10000"
                                 value={prompt}
                                 onChange={(e) => setPrompt(e.target.value)}
                             ></textarea>
-                            <div className="flex justify-end mt-4">
-                                <button onClick={handleGenerateQuestionsClick} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">+ Generar preguntas</button>
-                            </div>
                         </div>
                     )}
                 </div>
 
                 <div className="flex justify-end mt-4">
-                    <button onClick={handleCreateQuiz} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">Siguiente</button>
+                    <button onClick={handleCreateQuiz} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">
+                        Siguiente
+                    </button>
                 </div>
             </div>
         </div>

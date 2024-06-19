@@ -1,22 +1,32 @@
-import React, { useContext } from 'react';
-import QuizzContext from '../../context/QuizzProvider';
-import QuizzGame from './QuizzGame'; // Importa tu componente QuizzGame
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-const SuggestionQuizz = () => {
-    const { questions } = useContext(QuizzContext);
+import GeneratedQuizzGame from '../../components/GeneratedQuizzGame';
 
-    if (questions.length === 0) {
+const SuggestionQuizzCreation = () => {
+    const location = useLocation();
+    const { generatedQuiz } = location.state || {};
+    const [quizz, setQuizz] = useState(null);
+
+    useEffect(() => {
+        if (generatedQuiz) {
+            setQuizz(generatedQuiz);
+        }
+    }, [generatedQuiz]);
+
+    if (!quizz) {
         return (
-            <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md mt-10">
-                <h2 className="text-2xl font-bold mb-4 text-center text-purple-700">No hay preguntas generadas aún.</h2>
-                <p className="text-gray-500">Por favor, regresa y genera un quiz primero.</p>
+            <div className="flex items-center justify-center h-screen">
+                <h2 className="text-2xl font-bold text-gray-700">No quiz available</h2>
             </div>
         );
     }
 
     return (
-        <QuizzGame quizz={{ questions, name: 'Quizz generado por LLM' }} />
+        <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
+            <GeneratedQuizzGame quizz={quizz} />
+        </div>
     );
 };
 
-export default SuggestionQuizz;
+export default SuggestionQuizzCreation;
