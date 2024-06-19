@@ -9,10 +9,10 @@ const initialDummyQuizz = [
     {
         id: 1,
         name: 'Introduction to Programming with Python',
-        plays: '140.4K',
+        plays: '140.4K', //integer
         isDraft: false,
         creator: 'admin',
-        rating: 4.5,
+        rating: 4.5, //float
         questions: [
             { 
                 question: 'What is a variable in Python?', 
@@ -47,6 +47,7 @@ const initialDummyQuizz = [
         plays: '12.8K',
         isDraft: false,
         creator: 'ale',
+        llm: true,
         rating: 4.7,
         questions: [
             { 

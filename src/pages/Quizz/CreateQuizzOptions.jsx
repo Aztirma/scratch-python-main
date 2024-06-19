@@ -71,9 +71,9 @@ const CreateQuizzOptions = ({ handleGenerateQuestions }) => {
                         <div className="mt-4">
                             <textarea
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500"
-                                placeholder="Añade un tema, una sugerencia o pega tu extracto aquí"
+                                // placeholder="Añade un tema, una sugerencia o pega tu extracto aquí"
                                 maxLength="10000"
-                                defaultValue="Quisiera un quiz acerca de conceptos básicos de Python"
+                                placeholder="Quisiera un quiz acerca de conceptos básicos de Python"
                             ></textarea>
                             <div className="flex mt-4">
                                 <div className="flex-1 mr-2">
