@@ -1,47 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import clienteAxios from '../../config/clientAxios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const QuizzGame = () => {
-    const { id } = useParams();
-    const [quizz, setQuizz] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const QuizzGame = ({ quizz }) => {
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchQuizz = async () => {
-            try {
-                const cleanId = id.trim(); // Limpiar el ID
-                console.log(`Fetching quiz with ID: ${cleanId}`);
-                const response = await clienteAxios.get(`/quizz/${cleanId}`);
-                console.log('Quiz fetched:', response.data);
-                setQuizz(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching quiz:', error);
-                setError('Quiz not found');
-                setLoading(false);
-            }
-        };
-
-        fetchQuizz();
-    }, [id]);
-
-    if (loading) {
+    if (!quizz) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <h2 className="text-2xl font-bold text-gray-700">Loading...</h2>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <h2 className="text-2xl font-bold text-gray-700">{error}</h2>
+                <h2 className="text-2xl font-bold text-gray-700">Quiz not found</h2>
             </div>
         );
     }

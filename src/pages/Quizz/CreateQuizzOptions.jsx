@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import QuizzContext from '../../context/QuizzProvider';
 
-const CreateQuizzOptions = ({ handleGenerateQuestions }) => {
+const CreateQuizzOptions = () => {
     const [selectedOption, setSelectedOption] = useState(null);
+    const [prompt, setPrompt] = useState('');
+    const { generateQuizzWithLLM, setQuestions } = useContext(QuizzContext);
     const navigate = useNavigate();
 
     const handleOptionChange = (option) => {
@@ -13,15 +16,19 @@ const CreateQuizzOptions = ({ handleGenerateQuestions }) => {
         if (selectedOption === 'fromScratch') {
             navigate('/quizz/create/manual');
         } else if (selectedOption === 'suggestion') {
-            navigate('/quizz/create/suggestion');
+            handleGenerateQuestionsClick();
         } else {
             console.log('Opción seleccionada:', selectedOption);
         }
     };
 
-    const handleGenerateQuestionsClick = () => {
-        if (selectedOption === 'suggestion') {
+    const handleGenerateQuestionsClick = async () => {
+        try {
+            const generatedQuiz = await generateQuizzWithLLM(prompt);
+            setQuestions(generatedQuiz.questions);
             navigate('/quizz/create/suggestion');
+        } catch (error) {
+            console.error('Error generating quiz:', error);
         }
     };
 
@@ -71,46 +78,11 @@ const CreateQuizzOptions = ({ handleGenerateQuestions }) => {
                         <div className="mt-4">
                             <textarea
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500"
-                                // placeholder="Añade un tema, una sugerencia o pega tu extracto aquí"
                                 maxLength="10000"
                                 placeholder="Quisiera un quiz acerca de conceptos básicos de Python"
+                                value={prompt}
+                                onChange={(e) => setPrompt(e.target.value)}
                             ></textarea>
-                            <div className="flex mt-4">
-                                <div className="flex-1 mr-2">
-                                    <label className="block mb-1 text-purple-700 font-semibold">Dificultad</label>
-                                    <select
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500"
-                                        defaultValue="Principiante"
-                                    >
-                                        <option>Principiante</option>
-                                        <option>Intermedio</option>
-                                        <option>Avanzado</option>
-                                    </select>
-                                </div>
-                                <div className="flex-1 mr-2">
-                                    <label className="block mb-1 text-purple-700 font-semibold">Categoría</label>
-                                    <select
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500"
-                                        defaultValue="Programación"
-                                    >
-                                        <option>Programación</option>
-                                        <option>Programación Visual</option>
-                                        <option>Algoritmos</option>
-                                        <option>Estructuras de Datos</option>
-                                    </select>
-                                </div>
-                                <div className="flex-1">
-                                    <label className="block mb-1 text-purple-700 font-semibold">Cantidad de Preguntas</label>
-                                    <select
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500"
-                                        defaultValue="Automático"
-                                    >
-                                        <option>Automático</option>
-                                        <option>5</option>
-                                        <option>10</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div className="flex justify-end mt-4">
                                 <button onClick={handleGenerateQuestionsClick} className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">+ Generar preguntas</button>
                             </div>

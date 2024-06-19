@@ -151,7 +151,7 @@ const initialDummyQuizz = [
 
 const QuizzProvider = ({ children }) => {
     const [quizzes, setQuizzes] = useState([]);
-    const [questions, setQuestions] = useState([{ question: '', options: ['', ''], correctAnswer: '' }]);
+    const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
         const fetchQuizzes = async () => {
@@ -209,19 +209,31 @@ const QuizzProvider = ({ children }) => {
         }
     };
 
+    const generateQuizzWithLLM = async (prompt) => {
+        try {
+            const response = await clienteAxios.post('/openai/generar-form', { prompt });
+            return response.data;
+        } catch (error) {
+            console.error('Error generating quiz with LLM:', error);
+            throw error;
+        }
+    };
+
     return (
         <QuizzContext.Provider
             value={{
                 quizzes,
                 questions,
                 setQuizzes,
+                setQuestions,
                 handleQuestionChange,
                 handleOptionChangeAtIndex,
                 handleCorrectAnswerChange,
                 handleAddQuestion,
                 handleAddOption,
                 handleRemoveOption,
-                addQuiz
+                addQuiz,
+                generateQuizzWithLLM
             }}
         >
             {children}
