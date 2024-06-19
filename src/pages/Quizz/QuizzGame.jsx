@@ -1,7 +1,6 @@
-// src/pages/QuizzGame.jsx
-
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import QuizzRating from '../../components/QuizzRating';
 import clienteAxios from '../../config/clientAxios';
 import QuizzContext from '../../context/QuizzProvider';
 
@@ -12,6 +11,7 @@ const QuizzGame = () => {
     const [error, setError] = useState(null);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
+    const [showRating, setShowRating] = useState(false);
     const { createGameSession } = useContext(QuizzContext);
     const navigate = useNavigate();
 
@@ -70,6 +70,7 @@ const QuizzGame = () => {
                 incorrectAnswers
             });
             console.log('Game session created successfully');
+            setShowRating(true);
         } catch (error) {
             console.error('Error creating game session:', error);
         }
@@ -126,6 +127,9 @@ const QuizzGame = () => {
                         </button>
                     )}
                 </div>
+                {showRating && (
+                    <QuizzRating quizzId={quizz._id} onClose={() => setShowRating(false)} />
+                )}
             </div>
         </div>
     );

@@ -1,14 +1,7 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
-import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import ScheduleIcon from '@mui/icons-material/Schedule';
-import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
 
 const SidebarProfile = () => {
     const location = useLocation();
@@ -37,10 +30,10 @@ const SidebarProfile = () => {
                     <LockOutlinedIcon className="mr-3" />
                     <span>Seguridad</span>
                 </Link>
-                <Link to="/appearance" className={getLinkClassName('/appearance')}>
+                {/* <Link to="/appearance" className={getLinkClassName('/appearance')}>
                     <ArticleOutlinedIcon className="mr-3" />
                     <span>Apariencia</span>
-                </Link>
+                </Link> */}
                 {/* <Link to="/audio" className={getLinkClassName('/audio')}>
                     <CodeOutlinedIcon className="mr-3" />
                     <span>Audio</span>

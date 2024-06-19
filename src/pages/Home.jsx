@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 const Home = () => {
     const { user } = useAuth();
     const handleCreateClick = () => {
-        window.location.href = 'http://localhost:5173/src/komi/index.html';
+        window.location.href = 'http://localhost:5173/create';
     };
 
     const handleMoreInfoClick = () => {

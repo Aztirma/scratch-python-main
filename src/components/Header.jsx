@@ -1,6 +1,5 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
@@ -52,10 +51,10 @@ const Header = () => {
                         <KeyboardVoiceIcon className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
                     </button>
                 </div>
-                <NotificationsIcon
+                {/* <NotificationsIcon
                     className="text-gray-700 cursor-pointer"
                     onClick={toggleNotificationsDropdown}
-                />
+                /> */}
                 {notificationsDropdownVisible && (
                     <div className="absolute right-0 mt-60 w-80 bg-white border rounded-md shadow-lg">
                         <p className="px-4 py-2 text-gray-800 border-b">Notificaciones</p>
