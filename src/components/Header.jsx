@@ -34,7 +34,7 @@ const Header = () => {
                     <Link to="/home" className="text-purple-700 hover:text-purple-900">Inicio</Link>
                     {/* <a href='src/komi/index.html' className="text-purple-700 hover:text-purple-900">Crear</a> */}
                     <Link to="/create" className="text-purple-700 hover:text-purple-900">Create</Link>
-                    <Link to="/tutorial" className="text-purple-700 hover:text-purple-900">Tutorial</Link>
+                    <Link to="/tutorial" className="text-purple-700 hover:text-purple-900">Cursos</Link>
                     <Link to="/quizz" className="text-purple-700 hover:text-purple-900">Quizz</Link>
                     <Link to="/support" className="text-purple-700 hover:text-purple-900">Sugerencias</Link>
                     {/* <Link to="/support" className="text-purple-700 hover:text-purple-900">Support</Link> */}
