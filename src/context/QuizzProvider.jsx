@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import clienteAxios from '../config/clientAxios';
 
 // Crear el contexto
 const QuizzContext = createContext();
@@ -148,90 +149,79 @@ const initialDummyQuizz = [
     }
 ];
 
-// Función para filtrar quizzes
-const filterQuizzes = (quizzes, searchTerm) => {
-    return quizzes.filter(quizz => quizz.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
-};
-
-// Función para ordenar quizzes
-const sortQuizzes = (quizzes, sortOption) => {
-    let sortedQuizzes = [...quizzes];
-    switch (sortOption) {
-        case 'Most played':
-            sortedQuizzes.sort((a, b) => parseFloat(b.plays) - parseFloat(a.plays));
-            break;
-        case 'Least played':
-            sortedQuizzes.sort((a, b) => parseFloat(a.plays) - parseFloat(b.plays));
-            break;
-        case 'Highest Rated':
-            sortedQuizzes.sort((a, b) => b.rating - a.rating);
-            break;
-        default:
-            break;
-    }
-    return sortedQuizzes;
-};
-
-// Componente funcional que provee el contexto
 const QuizzProvider = ({ children }) => {
-    const [quizzes, setQuizzes] = useState(initialDummyQuizz);
-
-    // Estados y funciones para ExploreQuizz
-    const [filteredQuizzesExplore, setFilteredQuizzesExplore] = useState([]);
-    const [searchTermExplore, setSearchTermExplore] = useState('');
-    const [sortOptionExplore, setSortOptionExplore] = useState('Most played');
-
-    // Estados y funciones para LibraryQuizz
-    const [filteredQuizzesLibrary, setFilteredQuizzesLibrary] = useState([]);
-    const [searchTermLibrary, setSearchTermLibrary] = useState('');
-    const [sortOptionLibrary, setSortOptionLibrary] = useState('Most played');
-    const [libraryCategory, setLibraryCategory] = useState('all');
+    const [quizzes, setQuizzes] = useState([]);
+    const [questions, setQuestions] = useState([{ question: '', options: ['', ''], correctAnswer: '' }]);
 
     useEffect(() => {
-        let filtered = filterQuizzes(quizzes, searchTermExplore);
-        let sorted = sortQuizzes(filtered, sortOptionExplore);
-        setFilteredQuizzesExplore(sorted);
-    }, [quizzes, searchTermExplore, sortOptionExplore]);
+        const fetchQuizzes = async () => {
+            try {
+                const response = await clienteAxios.get('/quizz');
+                setQuizzes(response.data);
+            } catch (error) {
+                console.error('Error fetching quizzes:', error);
+            }
+        };
+        fetchQuizzes();
+    }, []);
 
-    useEffect(() => {
-        let filtered = filterQuizzes(quizzes, searchTermLibrary);
+    const handleQuestionChange = (index, value) => {
+        const newQuestions = [...questions];
+        newQuestions[index].question = value;
+        setQuestions(newQuestions);
+    };
 
-        switch (libraryCategory) {
-            case 'created':
-                filtered = filtered.filter(quizz => quizz.creator == 'admin');
-                break;
-            case 'imported':
-                filtered = filtered.filter(quizz => quizz.creator !== 'admin');
-                break;
-            case 'previouslyUsed':
-                filtered = filtered.filter(quizz => quizz.isPreviouslyUsed);
-                break;
-            case 'published':
-                filtered = filtered.filter(quizz => quizz.creator == 'admin' && !quizz.isDraft);
-                break;
-            case 'drafts':
-                filtered = filtered.filter(quizz => quizz.creator == 'admin' && quizz.isDraft);
-                break;
-            case 'all':
-            default:
-                break;
+    const handleOptionChangeAtIndex = (qIndex, oIndex, value) => {
+        const newQuestions = [...questions];
+        newQuestions[qIndex].options[oIndex] = value;
+        setQuestions(newQuestions);
+    };
+
+    const handleCorrectAnswerChange = (index, value) => {
+        const newQuestions = [...questions];
+        newQuestions[index].correctAnswer = value;
+        setQuestions(newQuestions);
+    };
+
+    const handleAddQuestion = () => {
+        setQuestions([...questions, { question: '', options: ['', ''], correctAnswer: '' }]);
+    };
+
+    const handleAddOption = (qIndex) => {
+        const newQuestions = [...questions];
+        newQuestions[qIndex].options.push('');
+        setQuestions(newQuestions);
+    };
+
+    const handleRemoveOption = (qIndex, oIndex) => {
+        const newQuestions = [...questions];
+        newQuestions[qIndex].options.splice(oIndex, 1);
+        setQuestions(newQuestions);
+    };
+
+    const addQuiz = async (quiz) => {
+        try {
+            console.log('Creating quiz with data:', JSON.stringify(quiz, null, 2)); // Debugging line
+            const response = await clienteAxios.post('/quizz', quiz);
+            setQuizzes([...quizzes, response.data]);
+        } catch (error) {
+            console.error('Error adding quiz:', error);
         }
-
-        let sorted = sortQuizzes(filtered, sortOptionLibrary);
-        setFilteredQuizzesLibrary(sorted);
-    }, [quizzes, searchTermLibrary, sortOptionLibrary, libraryCategory]);
+    };
 
     return (
         <QuizzContext.Provider
             value={{
                 quizzes,
-                filteredQuizzesExplore,
-                setSearchTermExplore,
-                setSortOptionExplore,
-                filteredQuizzesLibrary,
-                setSearchTermLibrary,
-                setSortOptionLibrary,
-                setLibraryCategory,
+                questions,
+                setQuizzes,
+                handleQuestionChange,
+                handleOptionChangeAtIndex,
+                handleCorrectAnswerChange,
+                handleAddQuestion,
+                handleAddOption,
+                handleRemoveOption,
+                addQuiz
             }}
         >
             {children}
