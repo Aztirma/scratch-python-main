@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import QuizzContext from '../../context/QuizzProvider';
+import QuizzGame from './QuizzGame'; // Importa tu componente QuizzGame
 
-const SuggestionQuizzCreation = () => {
-    // Lógica para manejar la generación de preguntas con IA
+const SuggestionQuizz = () => {
+    const { questions } = useContext(QuizzContext);
+
+    if (questions.length === 0) {
+        return (
+            <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md mt-10">
+                <h2 className="text-2xl font-bold mb-4 text-center text-purple-700">No hay preguntas generadas aún.</h2>
+                <p className="text-gray-500">Por favor, regresa y genera un quiz primero.</p>
+            </div>
+        );
+    }
 
     return (
-        <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md mt-10">
-            <h2 className="text-2xl font-bold mb-4 text-center text-purple-700">Generar preguntas con IA</h2>
-            <div className="mb-8">
-                {/* Mostrar las preguntas generadas con IA aquí */}
-                <p>Aquí se mostrarán las preguntas generadas con IA...</p>
-            </div>
-        </div>
+        <QuizzGame quizz={{ questions, name: 'Quizz generado por LLM' }} />
     );
 };
 
-export default SuggestionQuizzCreation;
+export default SuggestionQuizz;
