@@ -32,7 +32,7 @@ const Header = () => {
                 <nav className="ml-8 space-x-4">
                     <Link to="/home" className="text-purple-700 hover:text-purple-900">Inicio</Link>
                     {/* <a href='src/komi/index.html' className="text-purple-700 hover:text-purple-900">Crear</a> */}
-                    <Link to="/create" className="text-purple-700 hover:text-purple-900">Create</Link>
+                    <Link to="/create" className="text-purple-700 hover:text-purple-900">Crear</Link>
                     <Link to="/tutorial" className="text-purple-700 hover:text-purple-900">Cursos</Link>
                     <Link to="/quizz" className="text-purple-700 hover:text-purple-900">Quizz</Link>
                     <Link to="/support" className="text-purple-700 hover:text-purple-900">Sugerencias</Link>
@@ -41,7 +41,7 @@ const Header = () => {
                 </nav>
             </div>
             <div className="flex items-center space-x-4">
-                <div className="relative">
+                {/* <div className="relative">
                     <input
                         type="text"
                         placeholder="Search..."
@@ -50,7 +50,7 @@ const Header = () => {
                     <button>
                         <KeyboardVoiceIcon className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
                     </button>
-                </div>
+                </div> */}
                 {/* <NotificationsIcon
                     className="text-gray-700 cursor-pointer"
                     onClick={toggleNotificationsDropdown}

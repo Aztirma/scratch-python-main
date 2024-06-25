@@ -1,39 +1,87 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import SidebarCourse from './SidebarCourse';
-import QuizzGame from '../pages/Quizz/QuizzGame';
-
-
-const CourseDetail = (  ) => {
+import QuizzGame2 from '../pages/Quizz/QuizzGame2';
+import CourseContext from '../hooks/useCourse';
+import useCourse from '../hooks/useCourse';
+ 
+const CourseDetail = () => {
     const { id } = useParams();
-    const [selectedUnitId, setSelectedUnitId] = useState(1); // Por defecto, seleccionar la primera unidad
-    const [completedUnits, setCompletedUnits] = useState([1]); // Estado para manejar las unidades completadas
-    let indice = 0;
-    console.log('Params:', id);
-    id === "667281b82fc2bde12bc8b327" ? indice = 0 : indice = 1;
-    const course = coursesData[indice]; // Asumiendo que solo hay un curso por ahora
-    const unit = course.units.find((unit) => unit.id === selectedUnitId);
+    const { courses, units, updateUnit } = useCourse();
+
+    const [selectedUnitId, setSelectedUnitId] = useState(null);
+    const [completedUnits, setCompletedUnits] = useState([]);
+    const [course, setCourse] = useState(null);
+    const [unit, setUnit] = useState(null);
+    const [unitsCourse, setUnitsCourse] = useState([]);
 
     useEffect(() => {
-        
-    }, [id]);
+        if (courses.length > 0) {
+            const selectedCourse = courses.find((c) => c._id === id);
+            if (selectedCourse) {
+                setCourse(selectedCourse);
+                const courseUnits = units.filter((u) => u.courseID === selectedCourse._id);
+                if (courseUnits.length > 0) {
+                    setSelectedUnitId(courseUnits[0]._id);
+                    setUnit(courseUnits[0]);
+                    setUnitsCourse(courseUnits);
+                }
+                units.forEach((u) => {
+                    if (u.completed) {
+                        setCompletedUnits((prev) => [...prev, u._id]);
+                    }
+                }
+                );
+            }
+        }
+    }, [courses, id, units]);
+
+    useEffect(() => {
+        if (selectedUnitId) {
+            const foundUnit = units.find((unit) => unit._id === selectedUnitId);
+            setUnit(foundUnit);
+        }
+    }, [selectedUnitId, units]);
 
     const handleSelectUnit = (unitId) => {
-        const unitIndex = course.units.findIndex((unit) => unit.id === unitId);
-        if (unitIndex === 0 || course.units[unitIndex - 1].completed) {
+        const unitIndex = units.findIndex((unit) => unit._id === unitId);
+        if (unitIndex === 0 || units[unitIndex - 1].completed) {
             setSelectedUnitId(unitId);
         }
     };
 
-    const handleCompleteUnit = () => {
-        const updatedUnits = course.units.map((u) =>
-            u.id === selectedUnitId ? { ...u, completed: true } : u
-        );
-        course.units = updatedUnits;
-        setCompletedUnits((prev) => [...new Set([...prev, selectedUnitId])]);
+    const handleCompleteUnit = async () => {
+        if (!unit) return;
+
+        const updatedUnitData = {
+            courseID: unit.courseID,
+            unitNumber: unit.unitNumber,
+            unitName: unit.unitName,
+            description: unit.description,
+            video: unit.video,
+            quizzID: unit.quizzID,
+            completed: true,
+        };
+
+        try {
+            await updateUnit(selectedUnitId, updatedUnitData);
+            const updatedUnits = unitsCourse.map((u) =>
+                u._id === selectedUnitId ? { ...u, completed: true } : u
+            );
+            setUnitsCourse(updatedUnits);
+            setCompletedUnits((prev) => [...new Set([...prev, selectedUnitId])]);
+            setUnit((prevUnit) => ({ ...prevUnit, completed: true }));
+        } catch (error) {
+            console.error('Error updating unit:', error);
+        }
     };
 
     const isUnitCompleted = completedUnits.includes(selectedUnitId);
+    console.log('Unit:', selectedUnitId);
+    console.log('Unit:', completedUnits);
+    if (!course || !unit) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="flex h-screen">
@@ -41,7 +89,7 @@ const CourseDetail = (  ) => {
                 onSelectUnit={handleSelectUnit}
                 courseID={selectedUnitId}
                 completedUnits={completedUnits}
-                units={course.units}
+                units={unitsCourse}
             />
             <div className="w-3/4 p-4 relative">
                 <button
@@ -51,15 +99,15 @@ const CourseDetail = (  ) => {
                 >
                     {isUnitCompleted ? 'Unidad Completada' : 'Marcar como completada'}
                 </button>
-                <h2 className="text-xl font-bold">{course.name}</h2>
+                <h2 className="text-xl font-bold">{course.courseName}</h2>
                 <div className="mt-4">
-                    <h3 className="text-lg font-bold">{unit.title}</h3>
-                    {unit.hasVideo && (
+                    <h3 className="text-lg font-bold">{unit.unitName}</h3>
+                    {unit.video && (
                         <iframe
                             width="100%"
                             height="400"
-                            src={unit.videoUrl}
-                            title={unit.title}
+                            src={unit.video}
+                            title={unit.unitName}
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
@@ -69,113 +117,11 @@ const CourseDetail = (  ) => {
                 <div className="mt-4">
                     <p>{unit.description}</p>
                 </div>
-                {unit.hasQuizz ? <QuizzGame quizz={unit} /> : null}
+                <p>{unit.quizzID}</p>
+                {unit.quizzID ? <QuizzGame2 id={unit.quizzID} /> : null}
             </div>
         </div>
     );
 };
 
 export default CourseDetail;
-
-
-const coursesData = [
-    {
-        id: 'dsabjkabdsjabskjd',
-        title: 'CURSO 1',
-        category: 'Fundamentos',
-        name: 'Curso 1: Python básico',
-        units: [
-            {
-                id: 1,
-                title: 'Introduccion',
-                hasVideo: false,
-                completed: true,
-                hasQuizz: false,
-                videoUrl: '',
-                description: `Python se ha consolidado como uno de los lenguajes de programación más relevantes en la industria tecnológica actual. Su versatilidad, legibilidad y amplia gama de aplicaciones lo convierten en una herramienta indispensable tanto para desarrolladores novatos como para profesionales experimentados.
-                Este curso está diseñado para proporcionar una comprensión sólida y práctica de los conceptos fundamentales de Python. Comenzaremos con los elementos básicos, tales como la sintaxis del lenguaje, tipos de datos y estructuras de control. A medida que avancemos, exploraremos temas más complejos, incluyendo la manipulación de datos, funciones y la introducción a la programación orientada a objetos.
-                `,
-            },
-            {
-                id: 2,
-                title: 'Unidad 1: Introdución a Python',
-                hasVideo: true,
-                completed: false,
-                hasQuizz: false,
-                videoUrl: 'https://www.youtube.com/embed/U07acSMTdr4?si=79qouvu5fyLHRliG',
-                description: 'En esta unidad aprenderás sobre los fundamentos básicos de Python y el uso de la herramiento scratch-python.',
-            },
-            {
-                id: 3,
-                title: 'Unidad 2: Modelo de resolución de problemas',
-                hasVideo: true,
-                completed: false,
-                hasQuizz: false,
-                videoUrl: 'https://www.youtube.com/embed/5Qhjt_pirGQ?si=tTDSJmc_0re2-pcw',
-                description: 'Te mostraremos un ejemplo utilizando el IDE para que puedas implementarlo.',
-            },
-            {
-                id: 4,
-                title: 'Ponte a prueba',
-                hasVideo: false,
-                completed: false,
-                hasQuizz: true,
-                videoUrl: '',
-                description: 'Es momento de una autoevaluación.',
-            },
-        ],
-        description: 'Ya estás cerca a culminar tus estudios y seguro tienes preguntas sobre ¿Cómo cumplir con tu compromiso de servicio al Perú? En este curso te hablaremos sobre la importancia del Compromiso de Servicio al Perú y qué pasos debes seguir para cumplirlo.',
-        status: 'COMPLETADO',
-        progress: '100%',
-    },
-    {
-        id: 'dsabjkabdsjabskjd',
-        title: 'CURSO 2',
-        category: 'Algoritmos y Estructuras',
-        name: 'Curso 2: Algoritmos y Estructuras de datos en Python',
-        units: [
-            {
-                id: 1,
-                title: 'Introduccion',
-                hasVideo: false,
-                completed: true,
-                hasQuizz: false,
-                videoUrl: '',
-                description: `En el ámbito de la informática y el desarrollo de software, los algoritmos y las estructuras de datos son componentes fundamentales que determinan la eficiencia y el rendimiento de las aplicaciones. Este curso está diseñado para proporcionar una comprensión profunda y rigurosa de estos conceptos esenciales utilizando Python como lenguaje de programación.
-
-A lo largo de este curso, exploraremos una variedad de algoritmos clásicos y modernas estructuras de datos, desde los más básicos hasta los más avanzados. Comenzaremos con una introducción a los principios fundamentales de los algoritmos, incluyendo la complejidad temporal y espacial, y cómo analizar la eficiencia de diferentes enfoques. Posteriormente, nos adentraremos en las estructuras de datos más utilizadas, como listas, pilas, colas, árboles y grafos, así como en algoritmos de búsqueda y ordenación.`,
-            },
-            {
-                id: 2,
-                title: 'Unidad 1: Estructuras de datos',
-                hasVideo: true,
-                completed: false,
-                hasQuizz: false,
-                videoUrl: 'https://www.youtube.com/embed/U07acSMTdr4?si=79qouvu5fyLHRliG',
-                description: 'En esta unidad aprenderás sobre las diferentes estructuras de datos que posee Python y en que tipo de situaciones utilizarlas.',
-            },
-            {
-                id: 3,
-                title: 'Unidad 2: Complejidad algorítmica',
-                hasVideo: true,
-                completed: false,
-                hasQuizz: false,
-                videoUrl: 'https://www.youtube.com/embed/cpnPvh4wUnc?si=O6XeDXpPNxQeZkle',
-                description: 'En esta unidad te enseñaremos sobre la complejidad algorítmica y el estudio de algoritmos utilizando un entorno como python.',
-            },
-            {
-                id: 4,
-                title: 'Ponte a prueba',
-                hasVideo: false,
-                completed: false,
-                hasQuizz: true,
-                videoUrl: '',
-                description: 'Es momento de una autoevaluación.',
-            },
-        ],
-        description: 'Ya estás cerca a culminar tus estudios y seguro tienes preguntas sobre ¿Cómo cumplir con tu compromiso de servicio al Perú? En este curso te hablaremos sobre la importancia del Compromiso de Servicio al Perú y qué pasos debes seguir para cumplirlo.',
-        status: 'COMPLETADO',
-        progress: '100%',
-    }
-    
-];
