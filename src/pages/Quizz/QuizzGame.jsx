@@ -14,7 +14,7 @@ const QuizzGame = () => {
     const [showRating, setShowRating] = useState(false);
     const { createGameSession } = useContext(QuizzContext);
     const navigate = useNavigate();
-
+console.log('QuizzGame id:', id);
     useEffect(() => {
         const fetchQuizz = async () => {
             try {

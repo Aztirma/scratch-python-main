@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import QuizzRating from '../../components/QuizzRating';
 import clienteAxios from '../../config/clientAxios';
+import QuizzContext from '../../context/QuizzProvider';
 
-const QuizzGame2 = ( id ) => {
-    console.log('Quizz ID:', id);
+const QuizzGame2 = ({ id }) => {
     const [quizz, setQuizz] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
+    const [showRating, setShowRating] = useState(false);
+    const { createGameSession } = useContext(QuizzContext);
     const navigate = useNavigate();
+
+    console.log('QuizzGame id:', id);
 
     useEffect(() => {
         const fetchQuizz = async () => {
             try {
-                const cleanId = id.trim(); // Limpiar el ID
-                console.log(`Fetching quiz with ID: ${cleanId}`);
-                const response = await clienteAxios.get(`/quizz/${cleanId}`);
-                console.log('Quiz fetched:', response.data);
+                const response = await clienteAxios.get(`/quizz/${id}`);
                 setQuizz(response.data);
                 setLoading(false);
             } catch (error) {
@@ -53,8 +55,26 @@ const QuizzGame2 = ( id ) => {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setShowResults(true);
+
+        const correctAnswers = quizz.questions.reduce((acc, question, index) => {
+            return selectedAnswers[index] === question.correctAnswer ? acc + 1 : acc;
+        }, 0);
+
+        const incorrectAnswers = quizz.questions.length - correctAnswers;
+
+        try {
+            await createGameSession({
+                quizzId: quizz._id,
+                correctAnswers,
+                incorrectAnswers
+            });
+            console.log('Game session created successfully');
+            setShowRating(true);
+        } catch (error) {
+            console.error('Error creating game session:', error);
+        }
     };
 
     const handleBack = () => {
@@ -108,6 +128,9 @@ const QuizzGame2 = ( id ) => {
                         </button>
                     )}
                 </div>
+                {showRating && (
+                    <QuizzRating quizzId={quizz._id} onClose={() => setShowRating(false)} />
+                )}
             </div>
         </div>
     );

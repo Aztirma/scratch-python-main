@@ -46,6 +46,16 @@ const BlocklyComponent = () => {
         }
     };
 
+    const downloadPythonCode = () => {
+        const element = document.createElement('a');
+        const file = new Blob([generatedPythonCode], { type: 'text/plain' });
+        element.href = URL.createObjectURL(file);
+        element.download = 'blockly_script.py';
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
+        document.body.removeChild(element);
+    };
+
     return (
         <div className="flex">
             <div className="blockly-div" ref={blocklyDiv} />
@@ -221,8 +231,13 @@ const BlocklyComponent = () => {
             </div>
             <div className="code-output">
                 <pre>{generatedPythonCode}</pre>
-                <button className="execute-button" onClick={executeCode}>Execute</button>
+                <div className="flex space-x-4 button-container">
+                    <button className="execute-button bg-blue-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-300 hover:bg-blue-700" onClick={executeCode}>Execute</button>
+                    <button className="flex items-center bg-purple-principal text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-300 hover:bg-purple-700" onClick={downloadPythonCode}>Download Python Code</button>
+                </div>
             </div>
+
+
         </div>
     );
 };

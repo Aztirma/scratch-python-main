@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import QuizzContext from '../context/QuizzProvider'
+import CourseContext from '../context/CourseProvider'
 
-const useQuizz = () => {
-    return useContext(QuizzContext)
+const useCourse = () => {
+    return useContext(CourseContext)
 }
 
-export default useQuizz;
+export default useCourse;

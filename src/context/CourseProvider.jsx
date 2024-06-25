@@ -1,84 +1,124 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import clienteAxios from '../config/clientAxios';
 
-// Crear el contexto
 const CourseContext = createContext();
-
-// Datos iniciales de ejemplo
 
 const CourseProvider = ({ children }) => {
     const [courses, setCourses] = useState([]);
-    const [questions, setQuestions] = useState([{ question: '', options: ['', ''], correctAnswer: '' }]);
+    const [units, setUnits] = useState([]);
 
     useEffect(() => {
-        const fetchQuizzes = async () => {
+        const fetchCourses = async () => {
             try {
-                const response = await clienteAxios.get('/quizz');
+                const response = await clienteAxios.get('/course');
                 setCourses(response.data);
             } catch (error) {
-                console.error('Error fetching quizzes:', error);
+                console.error('Error fetching courses:', error);
             }
         };
-        fetchQuizzes();
+
+        const fetchUnits = async () => {
+            try {
+                const response = await clienteAxios.get('/unit');
+                setUnits(response.data);
+            } catch (error) {
+                console.error('Error fetching units:', error);
+            }
+        };
+
+        fetchCourses();
+        fetchUnits();
     }, []);
 
-    const handleQuestionChange = (index, value) => {
-        const newQuestions = [...questions];
-        newQuestions[index].question = value;
-        setQuestions(newQuestions);
-    };
-
-    const handleOptionChangeAtIndex = (qIndex, oIndex, value) => {
-        const newQuestions = [...questions];
-        newQuestions[qIndex].options[oIndex] = value;
-        setQuestions(newQuestions);
-    };
-
-    const handleCorrectAnswerChange = (index, value) => {
-        const newQuestions = [...questions];
-        newQuestions[index].correctAnswer = value;
-        setQuestions(newQuestions);
-    };
-
-    const handleAddQuestion = () => {
-        setQuestions([...questions, { question: '', options: ['', ''], correctAnswer: '' }]);
-    };
-
-    const handleAddOption = (qIndex) => {
-        const newQuestions = [...questions];
-        newQuestions[qIndex].options.push('');
-        setQuestions(newQuestions);
-    };
-
-    const handleRemoveOption = (qIndex, oIndex) => {
-        const newQuestions = [...questions];
-        newQuestions[qIndex].options.splice(oIndex, 1);
-        setQuestions(newQuestions);
-    };
-
-    const addQuiz = async (quiz) => {
+    const fetchUnits = async () => {
         try {
-            console.log('Creating quiz with data:', JSON.stringify(quiz, null, 2)); // Debugging line
-            const response = await clienteAxios.post('/quizz', quiz);
-            setCourses([...courses, response.data]);
+            const response = await clienteAxios.get('/unit');
+            setUnits(response.data);
         } catch (error) {
-            console.error('Error adding quiz:', error);
+            console.error('Error fetching courses:', error);
+        }
+    };
+
+    const fetchUnitsById = async (courseId) => {
+        try {
+            const response = await clienteAxios.get(`/unit?courseID=${courseId}`);
+            setUnits(response.data);
+        } catch (error) {
+            console.error('Error fetching units:', error);
+        }
+    };
+
+    const addCourse = async (course) => {
+        try {
+            const response = await clienteAxios.post('/course', course);
+            setCourses([...courses, response.data]);
+            return response;
+        } catch (error) {
+            console.error('Error adding course:', error);
+        }
+    };
+
+    const updateCourse = async (id, updatedCourse) => {
+        try {
+            const response = await clienteAxios.put(`/course/${id}`, updatedCourse);
+            setCourses(courses.map(course => course._id === id ? response.data : course));
+        } catch (error) {
+            console.error('Error updating course:', error);
+        }
+    };
+
+    const deleteCourse = async (id) => {
+        try {
+            await clienteAxios.delete(`/course/${id}`);
+            setCourses(courses.filter(course => course._id !== id));
+        } catch (error) {
+            console.error('Error deleting course:', error);
+        }
+    };
+
+    const addUnit = async (unit) => {
+        try {
+            const response = await clienteAxios.post('/unit', unit);
+            setUnits([...units, response.data]);
+        } catch (error) {
+            console.error('Error adding unit:', error);
+        }
+    };
+
+    const updateUnit = async (id, updatedUnit) => {
+        try {
+            console.log('Updated unit:', updatedUnit);
+            const response = await clienteAxios.put(`/unit/${id}`, updatedUnit);
+            setUnits(units.map(unit => unit._id === id ? response.data : unit));
+        } catch (error) {
+            console.error('Error updating unit:', error);
+        }
+    };
+
+    const deleteUnit = async (id) => {
+        try {
+            await clienteAxios.delete(`/unit/${id}`);
+            setUnits(units.filter(unit => unit._id !== id));
+        } catch (error) {
+            console.error('Error deleting unit:', error);
         }
     };
 
     return (
         <CourseContext.Provider
             value={{
-                quizzes: courses,
-                questions,
-                setQuizzes: setCourses,
-                handleQuestionChange,
-                handleOptionChangeAtIndex,
-                handleCorrectAnswerChange,
-                handleAddQuestion,
-                handleAddOption,
-                handleRemoveOption,
-                addQuiz
+                courses,
+                units,
+                setCourses,
+                setUnits,
+                addCourse,
+                updateCourse,
+                deleteCourse,
+                fetchUnits,
+                fetchUnitsById,
+                addUnit,
+                updateUnit,
+                deleteUnit,
             }}
         >
             {children}
@@ -86,5 +126,8 @@ const CourseProvider = ({ children }) => {
     );
 };
 
-export { CourseProvider as QuizzProvider };
+export { 
+    CourseProvider
+};
+
 export default CourseContext;
