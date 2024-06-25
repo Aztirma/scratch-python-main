@@ -14,7 +14,7 @@ const QuizzGame = () => {
     const [showRating, setShowRating] = useState(false);
     const { createGameSession } = useContext(QuizzContext);
     const navigate = useNavigate();
-console.log('QuizzGame id:', id);
+
     useEffect(() => {
         const fetchQuizz = async () => {
             try {
@@ -70,7 +70,11 @@ console.log('QuizzGame id:', id);
                 incorrectAnswers
             });
             console.log('Game session created successfully');
-            setShowRating(true);
+            
+            // Esperar 3 segundos antes de mostrar el rating
+            setTimeout(() => {
+                setShowRating(true);
+            }, 2000);
         } catch (error) {
             console.error('Error creating game session:', error);
         }

@@ -1,50 +1,51 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import About from "./pages/About"
-import Create from "./pages/Create"
-import Home from "./pages/Home"
-import CreateQuizz from "./pages/Quizz/CreateQuizz"
-import Support from "./pages/Support.jsx"
-import Tutorial from "./pages/Tutorial/Tutorial"
-import Profile from "./pages/User/Profile.jsx"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import 'regenerator-runtime/runtime';
+import About from "./pages/About";
+import Create from "./pages/Create";
+import Home from "./pages/Home";
+import CreateQuizz from "./pages/Quizz/CreateQuizz";
+import Support from "./pages/Support.jsx";
+import Tutorial from "./pages/Tutorial/Tutorial";
+import Profile from "./pages/User/Profile.jsx";
 
 //Ale agregadoa
-import P01 from "./pages/Antiguo/P01.jsx"
-import P02 from "./pages/Antiguo/P02.jsx"
-import P03 from "./pages/Antiguo/P03.jsx"
-import P04 from "./pages/Antiguo/P04.jsx"
-import Voiceflow from './pages/Antiguo/Voiceflow.jsx'
-import ExploreQuizz from "./pages/Quizz/ExploreQuizz"
-import LibraryQuizz from "./pages/Quizz/LibraryQuizz"
-import LoadingPage from "./pages/Quizz/LoadingPage.jsx"
-import ManualQuizzCreation from './pages/Quizz/ManualQuizzCreation'
-import QuizzGame from "./pages/Quizz/QuizzGame.jsx"
-import QuizzList from "./pages/Quizz/QuizzList.jsx"
-import ReportQuizz from "./pages/Quizz/ReportQuizz.jsx"
-import SuggestionQuizzCreation from './pages/Quizz/SuggestionQuizzCreation.jsx'
-import ExploreTutorial from "./pages/Tutorial/ExploreTutorial"
-import LibraryTutorial from "./pages/Tutorial/LibraryTutorial"
+import P01 from "./pages/Antiguo/P01.jsx";
+import P02 from "./pages/Antiguo/P02.jsx";
+import P03 from "./pages/Antiguo/P03.jsx";
+import P04 from "./pages/Antiguo/P04.jsx";
+import Voiceflow from './pages/Antiguo/Voiceflow.jsx';
+import ExploreQuizz from "./pages/Quizz/ExploreQuizz";
+import LibraryQuizz from "./pages/Quizz/LibraryQuizz";
+import LoadingPage from "./pages/Quizz/LoadingPage.jsx";
+import ManualQuizzCreation from './pages/Quizz/ManualQuizzCreation';
+import QuizzGame from "./pages/Quizz/QuizzGame.jsx";
+import QuizzList from "./pages/Quizz/QuizzList.jsx";
+import ReportQuizz from "./pages/Quizz/ReportQuizz.jsx";
+import SuggestionQuizzCreation from './pages/Quizz/SuggestionQuizzCreation.jsx';
+import ExploreTutorial from "./pages/Tutorial/ExploreTutorial";
+import LibraryTutorial from "./pages/Tutorial/LibraryTutorial";
 
-import { AuthProvider } from "./context/AuthProvider.jsx"
-import { QuizzProvider } from "./context/QuizzProvider.jsx"
-import { TutorialProvider } from "./context/TutorialProvider.jsx"
-import { CourseProvider } from "./context/CourseProvider.jsx"
-import PrivateRoute from "./layouts/PrivateRoute"
-import AccountConfirmation from './pages/Login/AccountConfirmation'
-import CreateAccount from './pages/Login/CreateAccount'
-import ForgotPassword from './pages/Login/ForgotPassword'
-import Login from "./pages/Login/Login.jsx"
-import PasswordResetConfirmation from './pages/Login/PasswordResetConfirmation'
+import { AuthProvider } from "./context/AuthProvider.jsx";
+import { CourseProvider } from "./context/CourseProvider.jsx";
+import { QuizzProvider } from "./context/QuizzProvider.jsx";
+import { TutorialProvider } from "./context/TutorialProvider.jsx";
+import PrivateRoute from "./layouts/PrivateRoute";
+import AccountConfirmation from './pages/Login/AccountConfirmation';
+import CreateAccount from './pages/Login/CreateAccount';
+import ForgotPassword from './pages/Login/ForgotPassword';
+import Login from "./pages/Login/Login.jsx";
+import PasswordResetConfirmation from './pages/Login/PasswordResetConfirmation';
 
-import CourseDetail from "./components/CourseDetail"
-import Appearance from './pages/User/Appearance'
-import Audio from './pages/User/Audio'
-import Bookmarks from './pages/User/Bookmarks'
-import Language from './pages/User/Language'
-import Progress from './pages/User/Progress'
-import Published from './pages/User/Published'
-import Schedule from './pages/User/Schedule'
-import Security from './pages/User/Security'
-import CreateCourse from './components/CreateCourse'
+import CourseDetail from "./components/CourseDetail";
+import CreateCourse from './components/CreateCourse';
+import Appearance from './pages/User/Appearance';
+import Audio from './pages/User/Audio';
+import Bookmarks from './pages/User/Bookmarks';
+import Language from './pages/User/Language';
+import Progress from './pages/User/Progress';
+import Published from './pages/User/Published';
+import Schedule from './pages/User/Schedule';
+import Security from './pages/User/Security';
 
 
 const App = () => {
