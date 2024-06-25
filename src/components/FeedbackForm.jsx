@@ -174,7 +174,7 @@ const FeedbackForm = () => {
                     <option value="Totalmente en desacuerdo">Totalmente en desacuerdo</option>
                 </select>
 
-                <label className="block mb-2">¿La documentación y tutoriales fueron útiles?</label>
+                <label className="block mb-2">¿Los cursos proporcionados fueron útiles?</label>
                 <select name="documentationHelpfulness" value={formData.documentationHelpfulness} onChange={handleChange} className="mb-4 p-2 w-full border rounded">
                     <option value="">Selecciona una opción</option>
                     <option value="Totalmente de acuerdo">Totalmente de acuerdo</option>
