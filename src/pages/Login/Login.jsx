@@ -78,13 +78,13 @@ const Login = () => {
                             </a>
                         </p>
                     </div>
-
-                    <div className="flex items-center justify-center mb-6 mt-4">
+                    
+                {/* <div className="flex items-center justify-center mb-6 mt-4">
                         <div className="border-t border-gray-300 w-1/4"></div>
                         <p className="text-base text-gray-600 px-3">O regístrate con</p>
                         <div className="border-t border-gray-300 w-1/4"></div>
                     </div>
-                    <div className="flex justify-center space-x-5">
+                        <div className="flex justify-center space-x-5">
                         <button className="flex items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-5 text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
                             <GoogleIcon className="h-6 w-6 mr-2" />
                             Google
@@ -96,8 +96,8 @@ const Login = () => {
                         <button className="flex items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-5 text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
                             <FacebookIcon className="h-6 w-6 mr-2" />
                             Facebook
-                        </button>
-                    </div>
+                        </button> 
+                    </div> */}
                 </form>
             </div>
         </div>

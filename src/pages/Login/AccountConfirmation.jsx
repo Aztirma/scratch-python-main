@@ -24,7 +24,7 @@ const AccountConfirmation = () => {
                     Abrir email
                 </button>
                 <p className="text-gray-600 ">No te ha legado un correo? <a href="/account-confirmation" className="text-purple-principal hover:underline">Reenvíalo.</a></p>
-                <p className="text-gray-600">Correo incorrecto? <a href="/" className="text-purple-principal hover:underline">Desloggeate</a> para inscribirte con otro correo</p>
+                <p className="text-gray-600">Ingresa con tu nueva cuenta <a href="/" className="text-purple-principal hover:underline">Ingresar</a> </p>
             </div>
         </>
 
