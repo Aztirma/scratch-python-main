@@ -117,7 +117,7 @@ const CourseDetail = () => {
                 <div className="mt-4">
                     <p>{unit.description}</p>
                 </div>
-                <p>{unit.quizzID}</p>
+                {/* <p>{unit.quizzID}</p> */}
                 {unit.quizzID ? <QuizzGame2 id={unit.quizzID} /> : null}
             </div>
         </div>

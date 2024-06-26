@@ -11,6 +11,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 const CreateAccount = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [fullName, setFullName] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const { createAccount } = useAuth();
@@ -24,7 +26,14 @@ const CreateAccount = () => {
             return;
         }
 
-        createAccount(username, password, () => {
+        const user = {
+            username: username,
+            email: email,
+            fullName: fullName,
+            password: password,
+        };
+
+        createAccount(user, () => {
             navigate('/account-confirmation');
         });
     };
@@ -46,13 +55,40 @@ const CreateAccount = () => {
                             type="text"
                             id="user"
                             placeholder="e.g. username@kinety.com"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                     </div>
 
 
+                    <div className="mb-1 w-[30rem]">
+                        <label className="block text-gray-700 text-base font-bold mb-1" htmlFor="user">
+                            Fullname
+                        </label>
+                        <input
+                            type="text"
+                            id="user"
+                            placeholder="Fullname"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                    </div>
+
+                    <div className="mb-1 w-[30rem]">
+                        <label className="block text-gray-700 text-base font-bold mb-1" htmlFor="user">
+                            Username
+                        </label>
+                        <input
+                            type="text"
+                            id="user"
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                    </div>
                     <div className="mb-1 w-[30rem]">
                         <label className="block text-gray-700 text-base font-bold mb-1" htmlFor="pass1">
                             Password

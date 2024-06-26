@@ -1,15 +1,21 @@
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import React from 'react';
 import useAuth from '../hooks/useAuth';
-
+import { useNavigate } from 'react-router-dom';
 const Home = () => {
+    const navigate = useNavigate();
+
     const { user } = useAuth();
     const handleCreateClick = () => {
-        window.location.href = 'http://localhost:5173/create';
+        navigate('/create')
+        // window.location.href = 'http://localhost:5173/create';
     };
+    console.log(user);
 
     const handleMoreInfoClick = () => {
-        window.location.href = 'http://localhost:5173/about';
+        navigate('/about')
+
+        // window.location.href = 'http://localhost:5173/about';
     };
 
     return (
@@ -22,7 +28,7 @@ const Home = () => {
                     <p className="text-lg text-gray-500 mb-4">
                         TU ASISTENTE INTELIGENTE PARA LA PROGRAMACIÓN VISUAL EN PYTHON
                     </p>
-                    <p>{user.username}</p>
+                    {/* <p>{user.username}</p> */}
                     <div className="flex justify-center lg:justify-start space-x-2">
                         <button
                             onClick={handleCreateClick}

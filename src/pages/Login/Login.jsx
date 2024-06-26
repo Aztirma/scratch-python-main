@@ -23,11 +23,11 @@ const Login = () => {
     return (
         <div>
             <HeaderLogin />
-    
+
             <div className="flex flex-col items-center justify-center bg-white">
                 <h1 className="text-5xl font-bold text-black mb-4 font-epilogue">Ingresar</h1>
                 <h2 className="text-lg text-slate-400 mb-8">Ingrese sus datos para ingresar.</h2>
-    
+
                 <form onSubmit={handleSubmit} className="p-4 bg-white">
                     <div className="mb-1 w-[30rem]">
                         <label className="block text-gray-700 text-base font-bold mb-1" htmlFor="user">
@@ -60,7 +60,7 @@ const Login = () => {
                             </a>
                         </div>
                     </div>
-    
+
                     <div className="flex items-center justify-center mb-6">
                         <button
                             type="submit"
@@ -69,7 +69,7 @@ const Login = () => {
                             Continuar
                         </button>
                     </div>
-    
+
                     <div className="mt-5 text-center mb-10">
                         <p className="text-base text-neutral-500">
                             No tienes una cuenta?{' '}
@@ -78,31 +78,31 @@ const Login = () => {
                             </a>
                         </p>
                     </div>
-    
+
                     <div className="flex items-center justify-center mb-6 mt-4">
                         <div className="border-t border-gray-300 w-1/4"></div>
                         <p className="text-base text-gray-600 px-3">O regístrate con</p>
                         <div className="border-t border-gray-300 w-1/4"></div>
                     </div>
                     <div className="flex justify-center space-x-5">
-                    <button className="flex items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-5 text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
-                        <GoogleIcon className="h-6 w-6 mr-2" />
-                        Google
-                    </button>
-                    <button className="flex items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-5 text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
-                        <AppleIcon className="h-6 w-6 mr-2" />
-                        Apple
-                    </button>
-                    <button className="flex items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-5 text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
-                        <FacebookIcon className="h-6 w-6 mr-2" />
-                        Facebook
-                    </button>
-                </div>
+                        <button className="flex items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-5 text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            <GoogleIcon className="h-6 w-6 mr-2" />
+                            Google
+                        </button>
+                        <button className="flex items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-5 text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            <AppleIcon className="h-6 w-6 mr-2" />
+                            Apple
+                        </button>
+                        <button className="flex items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-5 text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            <FacebookIcon className="h-6 w-6 mr-2" />
+                            Facebook
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
     );
-    
+
 
 
 

@@ -1,68 +1,67 @@
-import React, { useContext, useState, createContext } from 'react';
+import React, { useContext, useState, createContext, useEffect } from 'react';
 import clienteAxios from '../config/clientAxios';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [newUserEmail, setNewUserEmail] = useState('');
 
-    const login = async (username, password, callback) => {
+    useEffect(() => {
+        // Intentar recuperar la información del usuario del local storage al cargar
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    const login = async (email, password, callback) => {
         try {
-            const user = {username: username, password: password};
-            const response = await clienteAxios.post('/user/login/', user);
-            console.log(response.status);
+            const userData = { email, password };
+            const response = await clienteAxios.post('/user/login/', userData);
+
             if (response.status !== 200) {
                 alert("Invalid username or password");
                 setUser(null);
                 return;
             }
-            setUser(response.data); // response.data es el usuario
+
+            localStorage.setItem('user', JSON.stringify(response.data.user)); // Guardar el usuario en local storage
+            setUser(response.data.user);
             callback();
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
             alert("Invalid username or password");
             setUser(null);
         }
     };
 
     const logout = () => {
+        localStorage.removeItem('user'); // Remover el usuario del local storage
         setUser(null);
     };
 
-    const createAccount = async (username, password, callback) => {
+    const createAccount = async (userDetails, callback) => {
         try {
-            const user = {username: username, password: password};
-            const response = await clienteAxios.post('/user/', user);
+            console.log(userDetails);
+            const response = await clienteAxios.post('/user/', userDetails);
             console.log(response.data);
-            setNewUserEmail(username); // response.data es el usuario
+            setNewUserEmail(userDetails.email); // Guardar el email del nuevo usuario
             callback();
         }
         catch (error) {
-            console.log(error);
-            // alert("Invalid username or password");
+            console.error(error);
             setUser(null);
         }
     };
 
     return (
-        <AuthContext.Provider
-            value={{
-                user,
-                newUserEmail,
-                login,
-                logout,
-                createAccount,
-            }}>
+        <AuthContext.Provider value={{ user, newUserEmail, login, logout, createAccount }}>
             {children}
         </AuthContext.Provider>
     );
-
 };
 
-export {
-    AuthProvider
-}
-
+export { AuthProvider };
 export default AuthContext;

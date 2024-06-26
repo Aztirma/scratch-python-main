@@ -1,14 +1,31 @@
 import EditIcon from '@mui/icons-material/Edit';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SidebarProfile from '../../components/SidebarProfile';
+import useAuth from '../../hooks/useAuth';
 
 const Profile = () => {
-    const [fullName, setFullName] = useState('Komi Komi');
-    const [userName, setUserName] = useState('komi');
-    const [email, setEmail] = useState('komi@example.com');
+    const { user } = useAuth();
+    const [newFullName, setNewFullName] = useState('');
+    const [newUserName, setNewUserName] = useState('');
+    const [newEmail, setNewEmail] = useState('');
+    const [fullName, setFullName] = useState('');
+    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
     const [profilePic, setProfilePic] = useState(null);
+
+    useEffect(() => {
+        // Inicializa los estados con los datos del usuario actual
+        if (user) {
+            setFullName(user.fullName);
+            setUserName(user.username);
+            setEmail(user.email);
+            setNewFullName(user.fullName);
+            setNewUserName(user.username);
+            setNewEmail(user.email);
+        }
+    }, [user]);
 
     const handleProfilePicChange = (e) => {
         if (e.target.files && e.target.files[0]) {
@@ -17,12 +34,18 @@ const Profile = () => {
     };
 
     const handleUpdateInfo = () => {
-        // Aquí puedes manejar la actualización del perfil del usuario
+        // Actualiza la información mostrada con los nuevos valores ingresados
+        setFullName(newFullName);
+        setUserName(newUserName);
+        setEmail(newEmail);
         alert('Profile updated!');
     };
 
     const handleCancelUpdate = () => {
-        // Aquí puedes manejar la cancelación de los cambios
+        // Restablece los campos de entrada con los valores originales
+        setNewFullName(fullName);
+        setNewUserName(userName);
+        setNewEmail(email);
         alert('Update canceled');
     };
 
@@ -48,8 +71,9 @@ const Profile = () => {
                                 />
                             </label>
                         </div>
+                        <p>{userName}</p>
                         <h1 className="text-2xl font-bold text-gray-800">{fullName}</h1>
-                        <p className="text-gray-600">{userName}</p>
+                        <p className="text-gray-600">{email}</p>
                         <div className="flex items-center text-gray-500 mt-2 justify-center">
                             <LocationOnIcon className="mr-1" />
                             <span>Lima - 02:15 AM</span>
@@ -68,8 +92,8 @@ const Profile = () => {
                         <input
                             type="text"
                             className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={fullName}
-                            onChange={(e) => setFullName(e.target.value)}
+                            value={newFullName}
+                            onChange={(e) => setNewFullName(e.target.value)}
                         />
                     </div>
                     <div className="mb-4">
@@ -77,8 +101,8 @@ const Profile = () => {
                         <input
                             type="text"
                             className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
+                            value={newUserName}
+                            onChange={(e) => setNewUserName(e.target.value)}
                         />
                     </div>
                     <div className="mb-4">
@@ -86,8 +110,8 @@ const Profile = () => {
                         <input
                             type="email"
                             className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={newEmail}
+                            onChange={(e) => setNewEmail(e.target.value)}
                         />
                     </div>
                     <div className="flex space-x-4">
@@ -111,4 +135,3 @@ const Profile = () => {
 }
 
 export default Profile;
-

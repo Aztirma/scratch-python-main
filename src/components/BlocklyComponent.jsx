@@ -6,7 +6,7 @@ import 'blockly/blocks';
 import 'blockly/javascript';
 import 'blockly/python';
 import * as En from 'blockly/msg/en';
-import './BlocklyComponent.css'; // Importa el archivo CSS
+import './BlocklyComponent.css';
 
 Blockly.setLocale(En);
 
